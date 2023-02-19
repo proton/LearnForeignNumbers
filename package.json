@@ -1,7 +1,10 @@
 {
   "name": "learnnumbers",
   "version": "1.0.0",
-  "homepage": "https://github.com/owner/project#readme",
+  "description": "React-native app for learning numbers in different languages",
+  "homepage": "https://github.com/proton/LearnNumbers#readme",
+  "keywords": ["language-learning"],
+  "repository": "github:proton/LearnNumbers",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
