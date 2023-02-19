@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "LearnNumbers",
-    "slug": "LearnNumbers",
+    "slug": "learn-numbers",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "38da99f7-f90b-4b38-9ad6-3eaec21be2e8"
+      }
+    },
+    "owner": "proton2"
   }
 }
