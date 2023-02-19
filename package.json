@@ -9,17 +9,18 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
-  "dependencies": {
-    "expo": "^33.0.0",
-    "expo-status-bar": "~1.4.2",
-    "react": "18.1.0",
-    "react-native": "0.70.5"
-  },
+  "license": "GPL3",
   "devDependencies": {
-    "@babel/core": "^7.12.9",
+    "@babel/core": "^7.20.12",
     "eslint": "^8.34.0",
     "eslint-plugin-react": "^7.32.2",
-    "expo-cli": "^6.3.0"
+    "expo-cli": "^6.3.1"
   },
-  "license": "GPL3"
+  "dependencies": {
+    "expo": "^47.0.13",
+    "expo-status-bar": "^1.4.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native": "^0.71.3"
+  }
 }
