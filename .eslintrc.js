@@ -24,6 +24,7 @@ module.exports = {
       },
     ],
     'no-extra-semi': 'error',
+    semi: ['error', 'never'],
     'react/react-in-jsx-scope': 'off',
   },
   settings: {

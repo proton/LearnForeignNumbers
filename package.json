@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "React-native app for learning numbers in different languages",
   "homepage": "https://github.com/proton/LearnNumbers#readme",
-  "keywords": ["language-learning"],
+  "keywords": [
+    "language-learning"
+  ],
   "repository": "github:proton/LearnNumbers",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -24,6 +26,7 @@
     "expo-status-bar": "^1.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-native": "^0.71.3"
+    "react-native": "^0.71.3",
+    "@expo/vector-icons": "^13.0.0"
   }
 }
