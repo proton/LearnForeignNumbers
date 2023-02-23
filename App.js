@@ -21,7 +21,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.number}>{number}</Text>
       <View style={styles.footerContainer}>
-        <Button theme="primary" label="Show" />
+        <Button label="Show" />
         <Button label="Next" onPress={changeNumber} />
       </View>
       <StatusBar style="auto" />
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     flex: 1 / 3,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     flexDirection: 'row',
   },
   number: {
