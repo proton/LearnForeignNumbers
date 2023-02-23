@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, PixelRatio } from 'react-native'
+import { GestureHandlerRootView, TapGestureHandler, Swipeable, State } from 'react-native-gesture-handler'
+
 import Button from './components/Button'
 
 export default function App() {
@@ -13,18 +15,26 @@ export default function App() {
     else         setNumber(Math.floor(Math.random() * 1001))
   }
 
+  const onTap = event => {
+    if (event.nativeEvent.state === State.ACTIVE) changeNumber()
+  }
+
   useEffect(() => {
-    if (number === null) changeNumber()
+    // if (number === null) changeNumber()
   })
 
   return (
     <View style={styles.container}>
-      <Text style={styles.number}>{number}</Text>
-      <View style={styles.footerContainer}>
-        <Button label="Show" />
-        <Button label="Next" onPress={changeNumber} />
-      </View>
-      <StatusBar style="auto" />
+      <GestureHandlerRootView>
+        <TapGestureHandler onHandlerStateChange={onTap}>
+          <Text style={styles.number}>{number}</Text>
+        </TapGestureHandler>
+        <View style={styles.footerContainer}>
+          <Button label="Show" />
+          <Button label="Next" onPress={changeNumber} />
+        </View>
+        <StatusBar style="auto" />
+      </GestureHandlerRootView>
     </View>
   )
 }
@@ -44,5 +54,6 @@ const styles = StyleSheet.create({
   },
   number: {
     fontSize: PixelRatio.get() * 40,
+    textAlign: 'center',
   },
 })
