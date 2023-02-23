@@ -1,6 +1,7 @@
-import { StyleSheet, View, Pressable, Text } from 'react-native'
+import { StyleSheet, View, Pressable, Text, PixelRatio } from 'react-native'
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 
-export default function Button({ label, /* @info The prop theme to detect the button variant. */ theme/* @end */ }) {
+export default function Button({ label,  theme, onPress }) {
   if (theme === 'primary') {
     return (
       <View
@@ -8,7 +9,7 @@ export default function Button({ label, /* @info The prop theme to detect the bu
       >
         <Pressable
           style={[styles.button, { backgroundColor: '#fff' }]}
-          onPress={() => alert('You pressed a button.')}
+          onPress={onPress}
         >
           <FontAwesome
             name="picture-o"
@@ -24,7 +25,7 @@ export default function Button({ label, /* @info The prop theme to detect the bu
 
   return (
     <View style={styles.buttonContainer}>
-      <Pressable style={styles.button} onPress={() => alert('You pressed a button.')}>
+      <Pressable style={styles.button} onPress={onPress}>
         <Text style={styles.buttonLabel}>{label}</Text>
       </Pressable>
     </View>
@@ -32,5 +33,7 @@ export default function Button({ label, /* @info The prop theme to detect the bu
 }
 
 const styles = StyleSheet.create({
-  // Styles from previous step remain unchanged.
+  button: {
+    fontSize: PixelRatio.get() * 20,
+  },
 })
