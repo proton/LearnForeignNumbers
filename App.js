@@ -17,7 +17,8 @@ export default function App() {
   }
 
   const showAnswer = _ => {
-    Speech.speak(number.toString())
+    Speech.stop()
+    Speech.speak(number.toString(), { language: 'es-LA' })
   }
 
   const onTap = event => {
@@ -33,25 +34,23 @@ export default function App() {
   })
 
   return (
-    <View style={styles.container}>
-      <GestureHandlerRootView>
-        <FlingGestureHandler
-          direction={Directions.RIGHT | Directions.LEFT}
-          onHandlerStateChange={onSwipe}
-        >
-          <View style={styles.internalContainer}>
-            <TapGestureHandler onHandlerStateChange={onTap}>
-              <Text style={styles.number}>{number}</Text>
-            </TapGestureHandler>
-            <View style={styles.footerContainer}>
-              <Button label="Show answer" onPress={showAnswer} />
-              <Button label="Next" onPress={changeNumber} />
-            </View>
-            <StatusBar style="auto" />
+    <GestureHandlerRootView style={styles.container}>
+      <FlingGestureHandler
+        direction={Directions.RIGHT | Directions.LEFT}
+        onHandlerStateChange={onSwipe}
+      >
+        <View style={styles.internalContainer}>
+          <TapGestureHandler onHandlerStateChange={onTap}>
+            <Text style={styles.number}>{number}</Text>
+          </TapGestureHandler>
+          <View style={styles.footerContainer}>
+            <Button label="Show answer" onPress={showAnswer} />
+            <Button label="Next" onPress={changeNumber} />
           </View>
-        </FlingGestureHandler>
-      </GestureHandlerRootView>
-    </View>
+          <StatusBar style="auto" />
+        </View>
+      </FlingGestureHandler>
+    </GestureHandlerRootView>
   )
 }
 
@@ -78,6 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     flexDirection: 'row',
+    width: '100%',
   },
   number: {
     fontSize: PixelRatio.get() * 40,
