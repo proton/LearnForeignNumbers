@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar'
 import { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, PixelRatio } from 'react-native'
+import { StyleSheet, Text, View, PixelRatio, Button } from 'react-native'
 import { GestureHandlerRootView, TapGestureHandler, FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
 import * as Speech from 'expo-speech'
 
-import Button from './components/Button'
+// import Button from './components/Button'
 
 export default function App() {
   const [number, setNumber] = useState(null)
@@ -44,8 +44,8 @@ export default function App() {
             <Text style={styles.number}>{number}</Text>
           </TapGestureHandler>
           <View style={styles.footerContainer}>
-            <Button label="Show answer" onPress={showAnswer} />
-            <Button label="Next" onPress={changeNumber} />
+            <Button title="Show answer" onPress={showAnswer} />
+            <Button title="Next" color="red" onPress={changeNumber} />
           </View>
           <StatusBar style="auto" />
         </View>
