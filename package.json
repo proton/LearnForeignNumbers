@@ -27,6 +27,7 @@
     "expo": "^47.0.13",
     "expo-speech": "~11.0.0",
     "expo-status-bar": "~1.4.2",
+    "n2words": "^1.13.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
