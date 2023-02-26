@@ -1,14 +1,18 @@
+// import { useBus, useListener } from 'react-bus'
 import { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Dimensions, StyleSheet, Text, TextInput, View, PixelRatio, Button, ScrollView, Switch, Platform } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { SettingsScreen } from 'react-native-settings-screen'
 
+import EventBus from './EventBus'
+
 export default function Settings() {
   // useEffect(() => {
   //   if (number === null) changeNumber()
   // })
 
+  // const bus = useBus()
 
   const [language, setLanguage] = useState('en')
   const languages = [
@@ -103,7 +107,7 @@ export default function Settings() {
       rows: [
         {
           renderAccessory: () => (
-            <Button title='Start' color='red'></Button>
+            <Button title='Start' color='red' onPress={_ => { EventBus.getInstance().emit('closeSettings') }}></Button>
           ),
         },
       ],
