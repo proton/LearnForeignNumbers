@@ -1,6 +1,5 @@
-// import { useBus, useListener } from 'react-bus'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useState, useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
 import { Dimensions, StyleSheet, Text, TextInput, View, PixelRatio, Button, ScrollView, Switch, Platform } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { SettingsScreen } from 'react-native-settings-screen'
@@ -8,13 +7,39 @@ import { SettingsScreen } from 'react-native-settings-screen'
 import EventBus from './EventBus'
 
 export default function Settings() {
-  // useEffect(() => {
-  //   if (number === null) changeNumber()
-  // })
+  const storageKey = 'settings'
 
-  // const bus = useBus()
+  const [prefs,      setPrefs]      = useState({})
+  const [minNumber,  setMinNumber]  = useState(0)
+  const [maxNumber,  setMaxNumber]  = useState(1000)
+  const [language,   setLanguage]   = useState('en')
+  const [showAnswer, setShowAnswer] = useState(false)
 
-  const [language, setLanguage] = useState('en')
+  const loadSettings = async () => {
+    const jsonValue = await AsyncStorage.getItem(storageKey)
+    if (jsonValue == null) return
+    setPrefs(JSON.parse(jsonValue))
+    if (prefs.minNumber  != null) setMinNumber(prefs.minNumber)
+    if (prefs.maxNumber  != null) setMaxNumber(prefs.maxNumber)
+    if (prefs.language   != null) setLanguage(prefs.language)
+    if (prefs.showAnswer != null) setShowAnswer(prefs.showAnswer)
+  }
+
+  const saveSettings = async _ => {
+    const value = { minNumber, maxNumber, language, showAnswer }
+    const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem(storageKey, jsonValue)
+  }
+
+  const startGame = async _ => {
+    await saveSettings()
+    EventBus.getInstance().emit('closeSettings')
+  }
+
+  useEffect(_ => {
+    if (!prefs) loadSettings()
+  })
+
   const languages = [
     { value: 'ar', label: 'Arabic' },
     { value: 'az', label: 'Azerbaijani' },
@@ -56,7 +81,7 @@ export default function Settings() {
           title: 'From',
           renderAccessory: () => <TextInput
             editable
-            onChangeText={text => console.log(text)}
+            onChangeText={number => setMinNumber(number)}
             value={0}
             inputMode='numeric'
           />,
@@ -65,7 +90,7 @@ export default function Settings() {
           title: 'To',
           renderAccessory: () => <TextInput
             editable
-            onChangeText={text => console.log(text)}
+            onChangeText={number => setMaxNumber(number)}
             value={1000}
             inputMode='numeric'
           />,
@@ -79,13 +104,12 @@ export default function Settings() {
         {
           title: 'Immediately show the answer',
           renderAccessory: () => <Switch
-            onValueChange={text => console.log(text)}
-            value={false}
+            onValueChange={v => setShowAnswer(v)}
+            value={showAnswer}
           />,
         },
         {
           title: 'Languge',
-          subtitle: 'Subtitle',
           showDisclosureIndicator: true,
         },
         {
@@ -107,7 +131,7 @@ export default function Settings() {
       rows: [
         {
           renderAccessory: () => (
-            <Button title='Start' color='red' onPress={_ => { EventBus.getInstance().emit('closeSettings') }}></Button>
+            <Button title='Start' color='red' onPress={_ => startGame}></Button>
           ),
         },
       ],

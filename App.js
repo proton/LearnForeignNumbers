@@ -1,4 +1,3 @@
-// import { Provider as BusProvider, useBus, useListener } from 'react-bus'
 import { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View } from 'react-native'
@@ -11,8 +10,6 @@ export default function App() {
   // if settings set?
   const [view, setView] = useState('settings')
 
-  // const [bus, _] = useState(useBus())
-  // const bus = useBus()
   useEffect(_ => {
     EventBus.getInstance().on('openSettings',  _ => setView('settings'))
     EventBus.getInstance().on('closeSettings', _ => setView('game'))
