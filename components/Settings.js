@@ -31,9 +31,8 @@ export default function Settings() {
     await AsyncStorage.setItem(storageKey, jsonValue)
   }
 
-  const startGame = async _ => {
-    await saveSettings()
-    EventBus.emit('closeSettings')
+  const startGame = _ => {
+    saveSettings().then(_ =>  EventBus.emit('closeSettings'))
   }
 
   useEffect(_ => {
@@ -131,7 +130,7 @@ export default function Settings() {
       rows: [
         {
           renderAccessory: () => (
-            <Button title='Start' color='red' onPress={_ => startGame}></Button>
+            <Button title='Start' color='red' onPress={startGame}></Button>
           ),
         },
       ],
