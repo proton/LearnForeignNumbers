@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, View } from 'react-native'
+import EventBus from 'just-event-bus'
 
-import EventBus from './components/EventBus'
 import Game     from './components/Game'
 import Settings from './components/Settings'
 
 export default function App() {
   // if settings set?
-  const [view, setView] = useState('settings')
+  const [view, setView] = useState('game')
 
   useEffect(_ => {
-    EventBus.getInstance().on('openSettings',  _ => setView('settings'))
-    EventBus.getInstance().on('closeSettings', _ => setView('game'))
+    EventBus.on('openSettings',  _ => setView('settings'))
+    EventBus.on('closeSettings', _ => setView('game'))
 
     //if (number === null) changeNumber()
 

@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 import { Dimensions, StyleSheet, Text, TextInput, View, PixelRatio, Button, ScrollView, Switch, Platform } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import { SettingsScreen } from 'react-native-settings-screen'
-
-import EventBus from './EventBus'
+// import EventBus from 'just-event-bus'
+import EventBus from 'just-event-bus'
 
 export default function Settings() {
   const storageKey = 'settings'
@@ -33,7 +33,7 @@ export default function Settings() {
 
   const startGame = async _ => {
     await saveSettings()
-    EventBus.getInstance().emit('closeSettings')
+    EventBus.emit('closeSettings')
   }
 
   useEffect(_ => {

@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, PixelRatio, Button } from 'react-native'
 import { GestureHandlerRootView, TapGestureHandler, FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
 import n2words from 'n2words'
 import * as Speech from 'expo-speech'
+import EventBus from 'just-event-bus'
 
 // import Button from './components/Button'
 
@@ -25,6 +26,10 @@ export default function Game() {
     Speech.speak(number.toString(), { language: 'es-LA' })
   }
 
+  const openSettings = _ => {
+    EventBus.emit('openSettings')
+  }
+
   const onTap = event => {
     if (event.nativeEvent.state === State.ACTIVE) showAnswer()
   }
@@ -44,6 +49,7 @@ export default function Game() {
         onHandlerStateChange={onSwipe}
       >
         <View style={styles.internalContainer}>
+          <Button title="settings" onPress={openSettings}/>
           <TapGestureHandler onHandlerStateChange={onTap}>
             <Text style={styles.number}>{number}</Text>
           </TapGestureHandler>
