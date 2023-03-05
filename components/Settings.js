@@ -1,43 +1,15 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useState, useEffect } from 'react'
-import { Dimensions, StyleSheet, Text, TextInput, View, PixelRatio, Button, ScrollView, Switch, Platform } from 'react-native'
-import DropDownPicker from 'react-native-dropdown-picker'
-import { SettingsScreen } from 'react-native-settings-screen'
-// import EventBus from 'just-event-bus'
-import EventBus from 'just-event-bus'
+import { useState }                                                    from 'react'
+import { StyleSheet, Text, TextInput, View, Button, Switch, Platform } from 'react-native'
+import DropDownPicker                                                  from 'react-native-dropdown-picker'
+import { SettingsScreen }                                              from 'react-native-settings-screen'
+import EventBus                                                        from 'just-event-bus'
 
-export default function Settings() {
-  const storageKey = 'settings'
-
-  const [prefs,      setPrefs]      = useState({})
-  const [minNumber,  setMinNumber]  = useState(0)
-  const [maxNumber,  setMaxNumber]  = useState(1000)
-  const [language,   setLanguage]   = useState('en')
-  const [showAnswer, setShowAnswer] = useState(false)
-
-  const loadSettings = async () => {
-    const jsonValue = await AsyncStorage.getItem(storageKey)
-    if (jsonValue == null) return
-    setPrefs(JSON.parse(jsonValue))
-    if (prefs.minNumber  != null) setMinNumber(prefs.minNumber)
-    if (prefs.maxNumber  != null) setMaxNumber(prefs.maxNumber)
-    if (prefs.language   != null) setLanguage(prefs.language)
-    if (prefs.showAnswer != null) setShowAnswer(prefs.showAnswer)
-  }
-
-  const saveSettings = async _ => {
-    const value = { minNumber, maxNumber, language, showAnswer }
-    const jsonValue = JSON.stringify(value)
-    await AsyncStorage.setItem(storageKey, jsonValue)
-  }
+export default function Settings(props) {
+  const { prefs, saveSettings } = props
 
   const startGame = _ => {
-    saveSettings().then(_ =>  EventBus.emit('closeSettings'))
+    EventBus.emit('closeSettings')
   }
-
-  useEffect(_ => {
-    if (!prefs) loadSettings()
-  })
 
   const languages = [
     { value: 'ar', label: 'Arabic' },
@@ -80,8 +52,8 @@ export default function Settings() {
           title: 'From',
           renderAccessory: () => <TextInput
             editable
-            onChangeText={number => setMinNumber(number)}
-            value={0}
+            onChangeText={minMumber => saveSettings({ minMumber })}
+            value={prefs.minMumber}
             inputMode='numeric'
           />,
         },
@@ -89,8 +61,8 @@ export default function Settings() {
           title: 'To',
           renderAccessory: () => <TextInput
             editable
-            onChangeText={number => setMaxNumber(number)}
-            value={1000}
+            onChangeText={maxNumber => saveSettings({ maxNumber })}
+            value={prefs.maxNumber}
             inputMode='numeric'
           />,
         },
@@ -103,23 +75,23 @@ export default function Settings() {
         {
           title: 'Immediately show the answer',
           renderAccessory: () => <Switch
-            onValueChange={v => setShowAnswer(v)}
-            value={showAnswer}
+            onValueChange={showAnswer => saveSettings({ showAnswer })}
+            value={prefs.showAnswer}
           />,
         },
         {
           title: 'Languge',
-          showDisclosureIndicator: true,
+          showDisclosureIndicator: false,
         },
         {
           title: 'Text',
           renderAccessory: () => (
             <DropDownPicker
               open={languageSelectOpen}
-              value={language}
+              value={prefs.language}
               items={languages}
               setOpen={setLanguageSelectOpen}
-              setValue={setLanguage}
+              onValueChange={language => saveSettings({ language })}
             />
           ),
         },

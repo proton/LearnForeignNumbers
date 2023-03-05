@@ -1,14 +1,13 @@
-import { StatusBar } from 'expo-status-bar'
-import { useState, useEffect } from 'react'
-import { StyleSheet, Text, View, PixelRatio, Button } from 'react-native'
+import { useState, useEffect }                                                               from 'react'
+import { StyleSheet, Text, View, PixelRatio, Button }                                        from 'react-native'
 import { GestureHandlerRootView, TapGestureHandler, FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
-import n2words from 'n2words'
-import * as Speech from 'expo-speech'
-import EventBus from 'just-event-bus'
+import n2words                                                                               from 'n2words'
+import * as Speech                                                                           from 'expo-speech'
+import EventBus                                                                              from 'just-event-bus'
 
-// import Button from './components/Button'
+export default function Game(props) {
+  const { prefs } = props
 
-export default function Game() {
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
 
@@ -16,14 +15,17 @@ export default function Game() {
     const d = Math.random()
     if (d < 1/3) setNumber(Math.floor(Math.random() * 10))
     if (d < 2/3) setNumber(Math.floor(Math.random() * 100))
-    else         setNumber(Math.floor(Math.random() * 1001))
-    setNumberText('')
+    else setNumber(Math.floor(Math.random() * 1001))
+
+    if (prefs.showAnswer) showAnswer()
   }
 
   const showAnswer = _ => {
-    setNumberText(n2words(number, {lang: 'es'}))
+    if (!number) return
+
+    setNumberText(n2words(number, {lang: prefs.language}))
     Speech.stop()
-    Speech.speak(number.toString(), { language: 'es-LA' })
+    Speech.speak(number.toString(), { language: prefs.language })
   }
 
   const openSettings = _ => {
@@ -55,7 +57,7 @@ export default function Game() {
           </TapGestureHandler>
           <Text style={styles.numberText}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            <Button title="Show answer" onPress={showAnswer} />
+            {!prefs.showAnswer && <Button title="Show answer" onPress={showAnswer} />}
             <Button title="Next" color="red" onPress={changeNumber} />
           </View>
         </View>

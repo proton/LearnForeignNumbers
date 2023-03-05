@@ -1,39 +1,36 @@
 import { useState, useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, View } from 'react-native'
-import EventBus from 'just-event-bus'
+import { StatusBar }           from 'expo-status-bar'
+import { StyleSheet, View }    from 'react-native'
+import EventBus                from 'just-event-bus'
 
+import Config   from './components/Config'
 import Game     from './components/Game'
 import Settings from './components/Settings'
 
 export default function App() {
-  // if settings set?
-  const [view, setView] = useState('game')
+  const [prefs, setPrefs] = useState()
+  const [view, setView] = useState('')
+
+  const saveSettings = function(settings) {
+    setPrefs({...prefs, ...settings, firstLaunch: false})
+    Config.save(prefs)
+  }
 
   useEffect(_ => {
-    EventBus.on('openSettings',  _ => setView('settings'))
+    EventBus.on('prefsLoaded', prefs => {
+      setPrefs(prefs)
+      setView(prefs.firstLaunch ? 'settings' : 'game')
+    })
+    EventBus.on('openSettings', _ => setView('settings'))
     EventBus.on('closeSettings', _ => setView('game'))
 
-    //if (number === null) changeNumber()
-
-    // console.log([123, bus])
-
-    // const fff = _ => setView('settings')
-    // bus.on('openSettings',  fff)
-    // return () => {
-    //   bus.off('openSettings', fff)
-    // }
+    if (!prefs) Config.load()
   })
-
-
-
-  // useListener('openSettings',  function() { setView('settings') })
-  // useListener('closeSettings', function() { setView('game') })
 
   return (
     <View style={styles.container}>
-      {view === 'game' && <Game />}
-      {view === 'settings' && <Settings />}
+      {view === 'game' && <Game prefs={prefs} />}
+      {view === 'settings' && <Settings prefs={prefs} saveSettings={saveSettings} />}
       <StatusBar style="auto" />
     </View>
   )

@@ -19,6 +19,7 @@
     "@babel/core": "^7.19.3",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "eslint": "^8.34.0",
+    "eslint-plugin-align-import": "^1.0.0",
     "eslint-plugin-react": "^7.32.2",
     "expo-cli": "^6.3.1"
   },
