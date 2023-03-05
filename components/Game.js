@@ -7,7 +7,7 @@ import EventBus                                                                 
 
 export default function Game(props) {
   const { prefs } = props
-  const { minNumber, maxNumber } = prefs
+  const { minNumber, maxNumber, language } = prefs
 
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
@@ -30,18 +30,14 @@ export default function Game(props) {
       // TODO: improve me too!
       newNumber = randomBetween(minNumber, maxNumber)
     }
+    setNumberText('')
     setNumber(newNumber)
-
-    if (prefs.showAnswer) showAnswer()
-    else setNumberText('')
   }
 
   const showAnswer = _ => {
-    if (!number) return
-
-    setNumberText(n2words(number, {lang: prefs.language}))
+    setNumberText(n2words(number, { lang: language }))
     Speech.stop()
-    Speech.speak(number.toString(), { language: prefs.language })
+    Speech.speak(number.toString(), { language: language })
   }
 
   const openSettings = _ => {
@@ -55,6 +51,10 @@ export default function Game(props) {
   const onSwipe = event => {
     if (event.nativeEvent.state === State.ACTIVE) changeNumber()
   }
+
+  useEffect(()=> {
+    if (number && prefs.showAnswer) showAnswer()
+  }, [number])
 
   useEffect(() => {
     if (number === null) changeNumber()
