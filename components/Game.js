@@ -7,18 +7,30 @@ import EventBus                                                                 
 
 export default function Game(props) {
   const { prefs } = props
+  const { minNumber, maxNumber } = prefs
 
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
 
-  const changeNumber = _ => {
-    const newNumber = Math.floor(Math.random() * (prefs.maxNumber - prefs.minNumber + 1)) + prefs.minNumber
-    setNumber(newNumber)
+  const randomBetween = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  }
 
-    // const d = Math.random()
-    // if (d < 1/3) setNumber(Math.floor(Math.random() * 10)) // 0-9
-    // if (d < 2/3) setNumber(Math.floor(Math.random() * 100)) // 0-100
-    // else setNumber(Math.floor(Math.random() * 1001)) // 0-1000
+  const changeNumber = _ => {
+    let newNumber
+    if (minNumber === 0 && maxNumber > 0) {
+      // make it gradual
+      const l1 = minNumber.toString().length
+      const l2 = (maxNumber - 1).toString().length // 1000 to 999
+      const l = randomBetween(l1, l2)
+      const max = Math.min(+'9'.repeat(l) + 1, maxNumber)
+
+      newNumber = randomBetween(minNumber, max)
+    } else {
+      // TODO: improve me too!
+      newNumber = randomBetween(minNumber, maxNumber)
+    }
+    setNumber(newNumber)
 
     if (prefs.showAnswer) showAnswer()
     else setNumberText('')
