@@ -12,12 +12,16 @@ export default function Game(props) {
   const [numberText, setNumberText] = useState('')
 
   const changeNumber = _ => {
-    const d = Math.random()
-    if (d < 1/3) setNumber(Math.floor(Math.random() * 10))
-    if (d < 2/3) setNumber(Math.floor(Math.random() * 100))
-    else setNumber(Math.floor(Math.random() * 1001))
+    const newNumber = Math.floor(Math.random() * (prefs.maxNumber - prefs.minNumber + 1)) + prefs.minNumber
+    setNumber(newNumber)
+
+    // const d = Math.random()
+    // if (d < 1/3) setNumber(Math.floor(Math.random() * 10)) // 0-9
+    // if (d < 2/3) setNumber(Math.floor(Math.random() * 100)) // 0-100
+    // else setNumber(Math.floor(Math.random() * 1001)) // 0-1000
 
     if (prefs.showAnswer) showAnswer()
+    else setNumberText('')
   }
 
   const showAnswer = _ => {
