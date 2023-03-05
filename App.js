@@ -12,8 +12,9 @@ export default function App() {
   const [view, setView] = useState('')
 
   const saveSettings = function(settings) {
-    setPrefs({...prefs, ...settings, firstLaunch: false})
-    Config.save(prefs)
+    const newPrefs = { ...prefs, ...settings, firstLaunch: false }
+    setPrefs(newPrefs)
+    Config.save(newPrefs)
   }
 
   useEffect(_ => {
