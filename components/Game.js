@@ -11,6 +11,7 @@ export default function Game(props) {
 
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
+  const [voice, setVoice] = useState(null)
 
   const randomBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min
@@ -36,8 +37,10 @@ export default function Game(props) {
 
   const showAnswer = _ => {
     setNumberText(n2words(number, { lang: language }))
-    Speech.stop()
-    Speech.speak(number.toString(), { language: language })
+    if (voice) {
+      Speech.stop()
+      Speech.speak(number.toString(), { language: voice.name })
+    }
   }
 
   const openSettings = _ => {
@@ -52,12 +55,19 @@ export default function Game(props) {
     if (event.nativeEvent.state === State.ACTIVE) changeNumber()
   }
 
+  const findVoice = _ => {
+    Speech.getAvailableVoicesAsync().then(voices => {
+      setVoice(voices.find(voice => voice.language.startsWith(language)))
+    })
+  }
+
   useEffect(()=> {
     if (number && prefs.showAnswer) showAnswer()
   }, [number])
 
   useEffect(() => {
     if (number === null) changeNumber()
+    if (!voice || !voice.language.startsWith(language)) findVoice()
   })
 
   return (
