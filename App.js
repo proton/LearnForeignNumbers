@@ -20,8 +20,7 @@ export default function App() {
   useEffect(_ => {
     EventBus.on('prefsLoaded', prefs => {
       setPrefs(prefs)
-      setView('settings')
-      // setView(prefs.firstLaunch ? 'settings' : 'game')
+      setView(prefs.firstLaunch ? 'settings' : 'game')
     })
     EventBus.on('openSettings', _ => setView('settings'))
     EventBus.on('closeSettings', _ => setView('game'))
@@ -31,9 +30,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       {view === 'game' && <Game prefs={prefs} />}
       {view === 'settings' && <Settings prefs={prefs} saveSettings={saveSettings} />}
-      <StatusBar style="auto" />
     </View>
   )
 }
@@ -45,5 +44,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexShrink: 0,
     flexGrow: 1,
+    paddingTop: StatusBar.currentHeight || 35,
   },
 })

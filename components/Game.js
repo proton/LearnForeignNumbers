@@ -1,9 +1,11 @@
 import { useState, useEffect }                                                               from 'react'
-import { StyleSheet, Text, View, PixelRatio, Button }                                        from 'react-native'
+import { StyleSheet, Text, View, PixelRatio, TouchableOpacity }                              from 'react-native'
 import { GestureHandlerRootView, TapGestureHandler, FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
 import n2words                                                                               from 'n2words'
 import * as Speech                                                                           from 'expo-speech'
 import EventBus                                                                              from 'just-event-bus'
+
+import Button from './Button'
 
 export default function Game(props) {
   const { prefs } = props
@@ -77,14 +79,14 @@ export default function Game(props) {
         onHandlerStateChange={onSwipe}
       >
         <View style={styles.internalContainer}>
-          <Button title="settings" onPress={openSettings}/>
+          <Button icon="settings" onPress={openSettings} backgroundColor="#777" style={{ position: 'absolute', top: 10, right: 10 }}/>
           <TapGestureHandler onHandlerStateChange={onTap}>
             <Text style={styles.number}>{number}</Text>
           </TapGestureHandler>
           <Text style={styles.numberText}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button title="Show answer" onPress={showAnswer} />}
-            <Button title="Next" color="red" onPress={changeNumber} />
+            {!prefs.showAnswer && <Button title="Show answer" backgroundColor="#2196F3" onPress={showAnswer} />}
+            <Button title="Next" backgroundColor="red" onPress={changeNumber} />
           </View>
         </View>
       </FlingGestureHandler>
@@ -97,13 +99,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'yellow',
     flexShrink: 0,
     flexGrow: 1,
   },
   internalContainer: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
