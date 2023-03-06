@@ -20,7 +20,8 @@ export default function App() {
   useEffect(_ => {
     EventBus.on('prefsLoaded', prefs => {
       setPrefs(prefs)
-      setView(prefs.firstLaunch ? 'settings' : 'game')
+      setView('settings')
+      // setView(prefs.firstLaunch ? 'settings' : 'game')
     })
     EventBus.on('openSettings', _ => setView('settings'))
     EventBus.on('closeSettings', _ => setView('game'))
@@ -42,7 +43,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'pink',
     flexShrink: 0,
     flexGrow: 1,
   },

@@ -1,8 +1,12 @@
-import { useState }                                                    from 'react'
-import { StyleSheet, Text, TextInput, View, Button, Switch, Platform } from 'react-native'
-import DropDownPicker                                                  from 'react-native-dropdown-picker'
-import { SettingsScreen }                                              from 'react-native-settings-screen'
-import EventBus                                                        from 'just-event-bus'
+import { useState, useRef }                       from 'react'
+import { StyleSheet, Text, View, Button, Switch } from 'react-native'
+import DropDownPicker                             from 'react-native-dropdown-picker'
+import EventBus                                   from 'just-event-bus'
+
+import SettingsSection    from './SettingsSection'
+import SettingsRow        from './SettingsRow'
+import SettingNumberInput from './SettingsNumberInput'
+import SettingLabel       from './SettingsLabel'
 
 export default function Settings(props) {
   const { prefs, saveSettings } = props
@@ -43,107 +47,62 @@ export default function Settings(props) {
 
   const [languageSelectOpen, setLanguageSelectOpen] = useState(false)
 
-  const settingsData = [
-    {
-      type: 'SECTION',
-      header: 'Numbers'.toUpperCase(),
-      rows: [
-        {
-          title: 'From',
-          renderAccessory: _ => <TextInput
-            editable
-            onChangeText={minNumber => saveSettings({ minNumber: +minNumber })}
-            value={prefs.minNumber.toString()}
-            keyboardType='numeric'
-          />,
-        },
-        {
-          title: 'To',
-          renderAccessory: _ => <TextInput
-            editable
-            onChangeText={maxNumber => saveSettings({ maxNumber: +maxNumber })}
-            value={prefs.maxNumber.toString()}
-            keyboardType='numeric'
-          />,
-        },
-      ],
-    },
-    {
-      type: 'SECTION',
-      header: 'Other'.toUpperCase(),
-      rows: [
-        {
-          title: 'Immediately show the answer',
-          renderAccessory: _ => <Switch
-            onValueChange={showAnswer => saveSettings({ showAnswer })}
-            value={prefs.showAnswer}
-          />,
-        },
-        {
-          title: 'Languge',
-          showDisclosureIndicator: false,
-        },
-        {
-          title: 'Text',
-          renderAccessory: _ => (
-            <DropDownPicker
-              open={languageSelectOpen}
-              value={prefs.language}
-              items={languages}
-              setOpen={setLanguageSelectOpen}
-              onValueChange={language => saveSettings({ language })}
-            />
-          ),
-        },
-      ],
-    },
-    {
-      type: 'SECTION',
-      rows: [
-        {
-          renderAccessory: _ => (
-            <Button title='Start' color='red' onPress={startGame}></Button>
-          ),
-        },
-      ],
-    },
-  ]
+  const minNumberRef = useRef()
+  const maxNumberRef = useRef()
 
   return (
     <View style={styles.container}>
-      <View style={styles.navBar}>
-        <Text style={styles.navBarTitle}>Settings</Text>
-      </View>
-      <SettingsScreen
-        data={settingsData}
-      />
+      <Text style={styles.header}>Configure</Text>
+      <SettingsSection title='Numbers'>
+        <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
+          <SettingLabel title="From" />
+          <SettingNumberInput inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} />
+        </SettingsRow>
+        <SettingsRow>
+          <SettingLabel title="To" />
+          <SettingNumberInput inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} />
+        </SettingsRow>
+      </SettingsSection>
+      <SettingsSection title='Other'>
+        <SettingsRow>
+          <SettingLabel title="Immediately show the answer" />
+          <Switch
+            onValueChange={showAnswer => saveSettings({ showAnswer })}
+            value={prefs.showAnswer}
+          />
+        </SettingsRow>
+      </SettingsSection>
+      <SettingsSection title='Language'>
+        <DropDownPicker
+          open={languageSelectOpen}
+          value={prefs.language}
+          items={languages}
+          setOpen={setLanguageSelectOpen}
+          onValueChange={language => saveSettings({ language })}
+        />
+      </SettingsSection>
+      <Button title='Start' color='red' onPress={startGame}></Button>
     </View>
   )
 }
 
-const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'sans-serif'
-
-const statusBarHeight = Platform.OS === 'ios' ? 35 : 35
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'stretch',
+    alignContent: 'stretch',
     justifyContent: 'center',
+    flexDirection: 'column',
     flexShrink: 0,
     flexGrow: 1,
+    maxWidth: '100%',
+    maxHeight: '100%',
+    padding: 10,
   },
-  navBar: {
-    backgroundColor: '#8c231c',
-    height: 44 + statusBarHeight,
-    alignSelf: 'stretch',
-    paddingTop: statusBarHeight,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  navBarTitle: {
-    color: 'white',
-    fontFamily,
-    fontSize: 17,
+  header: {
+    textAlign: 'center',
+    fontSize: 22,
+    color: 'grey',
+    padding: 15,
   },
 })
