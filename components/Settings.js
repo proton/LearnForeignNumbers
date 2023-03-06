@@ -50,20 +50,20 @@ export default function Settings(props) {
       rows: [
         {
           title: 'From',
-          renderAccessory: () => <TextInput
+          renderAccessory: _ => <TextInput
             editable
-            onChangeText={minMumber => saveSettings({ minMumber })}
-            value={prefs.minMumber}
-            inputMode='numeric'
+            onChangeText={minNumber => saveSettings({ minNumber: +minNumber })}
+            value={prefs.minNumber.toString()}
+            keyboardType='numeric'
           />,
         },
         {
           title: 'To',
-          renderAccessory: () => <TextInput
+          renderAccessory: _ => <TextInput
             editable
-            onChangeText={maxNumber => saveSettings({ maxNumber })}
-            value={prefs.maxNumber}
-            inputMode='numeric'
+            onChangeText={maxNumber => saveSettings({ maxNumber: +maxNumber })}
+            value={prefs.maxNumber.toString()}
+            keyboardType='numeric'
           />,
         },
       ],
@@ -74,7 +74,7 @@ export default function Settings(props) {
       rows: [
         {
           title: 'Immediately show the answer',
-          renderAccessory: () => <Switch
+          renderAccessory: _ => <Switch
             onValueChange={showAnswer => saveSettings({ showAnswer })}
             value={prefs.showAnswer}
           />,
@@ -85,7 +85,7 @@ export default function Settings(props) {
         },
         {
           title: 'Text',
-          renderAccessory: () => (
+          renderAccessory: _ => (
             <DropDownPicker
               open={languageSelectOpen}
               value={prefs.language}
@@ -101,7 +101,7 @@ export default function Settings(props) {
       type: 'SECTION',
       rows: [
         {
-          renderAccessory: () => (
+          renderAccessory: _ => (
             <Button title='Start' color='red' onPress={startGame}></Button>
           ),
         },
