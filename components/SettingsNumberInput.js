@@ -9,7 +9,7 @@ export default function SettingNumberInput({ value, onChange, inputRef }) {
     <TextInput
       ref={inputRef}
       style={{ ...styles.element, color: textColor }}
-      onChange={number => onChange(+number)}
+      onChangeText={number => onChange(+number || 0)}
       value={value.toString()}
       inputMode='numeric'
       keyboardType='numeric'

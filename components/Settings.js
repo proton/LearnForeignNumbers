@@ -77,15 +77,17 @@ export default function Settings(props) {
         </SettingsRow>
       </SettingsSection>
       <SettingsSection title='Language'>
-        <DropDownPicker
-          open={languageSelectOpen}
-          value={prefs.language}
-          items={languages}
-          setOpen={setLanguageSelectOpen}
-          setValue={language => saveSettings({ language: language() })}
-          listMode='MODAL'
-          theme={colorScheme == 'dark' ? 'DARK' : 'LIGHT'}
-        />
+        <SettingsRow>
+          <DropDownPicker
+            open={languageSelectOpen}
+            value={prefs.language}
+            items={languages}
+            setOpen={setLanguageSelectOpen}
+            setValue={language => saveSettings({ language: language() })}
+            listMode='MODAL'
+            theme={colorScheme == 'dark' ? 'DARK' : 'LIGHT'}
+          />
+        </SettingsRow>
       </SettingsSection>
       <Button title='Start' color='red' onPress={startGame}></Button>
     </View>
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     maxHeight: '100%',
     padding: 10,
-    gap: 10,
+    gap: 20,
   },
   header: {
     textAlign: 'center',
