@@ -1,14 +1,16 @@
-import { useState, useRef }                       from 'react'
-import { StyleSheet, Text, View, Button, Switch } from 'react-native'
-import DropDownPicker                             from 'react-native-dropdown-picker'
-import EventBus                                   from 'just-event-bus'
+import { useState, useRef }                               from 'react'
+import { StyleSheet, Text, View, Switch, useColorScheme } from 'react-native'
+import DropDownPicker                                     from 'react-native-dropdown-picker'
+import EventBus                                           from 'just-event-bus'
 
+import Button             from './Button'
 import SettingsSection    from './SettingsSection'
 import SettingsRow        from './SettingsRow'
 import SettingNumberInput from './SettingsNumberInput'
 import SettingLabel       from './SettingsLabel'
 
 export default function Settings(props) {
+  const colorScheme = useColorScheme()
   const { prefs, saveSettings } = props
 
   const startGame = _ => {
@@ -50,9 +52,11 @@ export default function Settings(props) {
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
 
+  const headerColor = colorScheme == 'dark' ? '#999' : 'grey'
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Configure</Text>
+      <Text style={{ ...styles.header, color: headerColor }}>Configure</Text>
       <SettingsSection title='Numbers'>
         <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
           <SettingLabel title="From" />
@@ -80,6 +84,7 @@ export default function Settings(props) {
           setOpen={setLanguageSelectOpen}
           setValue={language => saveSettings({ language: language() })}
           listMode='MODAL'
+          theme={colorScheme == 'dark' ? 'DARK' : 'LIGHT'}
         />
       </SettingsSection>
       <Button title='Start' color='red' onPress={startGame}></Button>
@@ -99,11 +104,11 @@ const styles = StyleSheet.create({
     maxWidth: '100%',
     maxHeight: '100%',
     padding: 10,
+    gap: 10,
   },
   header: {
     textAlign: 'center',
     fontSize: 22,
-    color: 'grey',
     padding: 15,
   },
 })

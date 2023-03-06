@@ -1,5 +1,5 @@
 import { useState, useEffect }                                                               from 'react'
-import { StyleSheet, Text, View, PixelRatio, TouchableOpacity }                              from 'react-native'
+import { StyleSheet, Text, View, PixelRatio, useColorScheme }                                from 'react-native'
 import { GestureHandlerRootView, TapGestureHandler, FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
 import n2words                                                                               from 'n2words'
 import * as Speech                                                                           from 'expo-speech'
@@ -7,8 +7,8 @@ import EventBus                                                                 
 
 import Button from './Button'
 
-export default function Game(props) {
-  const { prefs } = props
+export default function Game({ prefs }) {
+  const colorScheme = useColorScheme()
   const { minNumber, maxNumber, language } = prefs
 
   const [number, setNumber] = useState(null)
@@ -72,6 +72,9 @@ export default function Game(props) {
     if (!voice || !voice.language.startsWith(language)) findVoice()
   })
 
+  const numberColor = colorScheme == 'dark' ? '#bebebe' : 'black'
+  const numberTextColor = colorScheme == 'dark' ? '#aaa' : 'grey'
+
   return (
     <GestureHandlerRootView style={styles.container}>
       <FlingGestureHandler
@@ -79,14 +82,14 @@ export default function Game(props) {
         onHandlerStateChange={onSwipe}
       >
         <View style={styles.internalContainer}>
-          <Button icon="settings" onPress={openSettings} backgroundColor="#777" style={{ position: 'absolute', top: 10, right: 10 }}/>
+          <Button icon="settings" onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
           <TapGestureHandler onHandlerStateChange={onTap}>
-            <Text style={styles.number}>{number}</Text>
+            <Text style={{ ...styles.number, color: numberColor }}>{number}</Text>
           </TapGestureHandler>
-          <Text style={styles.numberText}>{numberText}</Text>
+          <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button title="Show answer" backgroundColor="#2196F3" onPress={showAnswer} />}
-            <Button title="Next" backgroundColor="red" onPress={changeNumber} />
+            {!prefs.showAnswer && <Button title="Show answer" color="blue" onPress={showAnswer} />}
+            <Button title="Next" color="red" onPress={changeNumber} />
           </View>
         </View>
       </FlingGestureHandler>
@@ -124,6 +127,5 @@ const styles = StyleSheet.create({
   numberText: {
     fontSize: PixelRatio.get() * 18,
     textAlign: 'center',
-    color: 'grey',
   },
 })

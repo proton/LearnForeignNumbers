@@ -1,10 +1,12 @@
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, useColorScheme } from 'react-native'
 
-export default function SettingLabel(props) {
-  const { title } = props
+export default function SettingLabel({ title }) {
+  const colorScheme = useColorScheme()
+
+  const labelColor = colorScheme == 'dark' ? '#999' : 'grey'
 
   return (
-    <Text style={styles.label}>{title}</Text>
+    <Text style={{ ...styles.label, color: labelColor }}>{title}</Text>
   )
 }
 

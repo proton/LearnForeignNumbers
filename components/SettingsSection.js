@@ -1,11 +1,13 @@
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, useColorScheme } from 'react-native'
 
-export default function SettingsSection(props) {
-  const { title, children } = props
+export default function SettingsSection({ title, children }) {
+  const colorScheme = useColorScheme()
+
+  const labelColor = colorScheme == 'dark' ? '#999' : 'grey'
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{title}</Text>
+      <Text style={{ ...styles.label, color: labelColor }}>{title}</Text>
       {children}
     </View>
   )

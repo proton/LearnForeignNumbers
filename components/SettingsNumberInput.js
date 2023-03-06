@@ -1,12 +1,14 @@
-import { StyleSheet, TextInput } from 'react-native'
+import { StyleSheet, TextInput, useColorScheme } from 'react-native'
 
-export default function SettingNumberInput(props) {
-  const { value, onChange, inputRef } = props
+export default function SettingNumberInput({ value, onChange, inputRef }) {
+  const colorScheme = useColorScheme()
+
+  const textColor = colorScheme == 'dark' ? '#999' : 'grey'
 
   return (
     <TextInput
       ref={inputRef}
-      style={styles.element}
+      style={{ ...styles.element, color: textColor }}
       onChange={number => onChange(+number)}
       value={value.toString()}
       inputMode='numeric'

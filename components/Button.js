@@ -1,41 +1,27 @@
-// import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, useColorScheme } from 'react-native'
+import { Feather }                                            from '@expo/vector-icons'
 
-// export default function Button({ onPress, title, size, backgroundColor }) {
-//   return (
-//     <TouchableOpacity
-//       onPress={onPress}
-//       style={[
-//         styles.appButtonContainer,
-//         size === 'sm' && {
-//           paddingHorizontal: 8,
-//           paddingVertical: 6,
-//           elevation: 6,
-//         },
-//         backgroundColor && { backgroundColor },
-//       ]}
-//     >
-//       <Text style={[styles.appButtonText, size === 'sm' && { fontSize: 14 }]}>
-//         {title}
-//       </Text>
-//     </TouchableOpacity>
-//   )
-// }
+const Button = ({ onPress, icon, title, color, style }) => {
+  const colorScheme = useColorScheme()
 
+  const textColor = colorScheme == 'dark' ? '#ccc' : 'white'
+  let backgroundColor
 
+  if (color == 'red') {
+    backgroundColor = colorScheme == 'dark' ? '#B00020' : 'red'
+  } else if (color == 'blue') {
+    backgroundColor = colorScheme == 'dark' ? '#3700B3' : '#2196F3'
+  } else if (color == 'grey') {
+    backgroundColor = colorScheme == 'dark' ? '#333333' : '#777777'
+  }
 
-//////////////
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { Feather }                            from '@expo/vector-icons'
-
-
-const Button = ({ onPress, icon, title, backgroundColor, style }) => {
-  const containerStyles = { ...styles.container, ...style }
-  if (backgroundColor) containerStyles.backgroundColor = backgroundColor
+  const containerStyles = { ...styles.container, ...style, backgroundColor }
+  const textStyles = { ...styles.text, color: textColor }
 
   return (
     <TouchableOpacity style={containerStyles} onPress={onPress} activeOpacity={0.8}>
       {icon && <Feather name={icon} size={24} color="white" />}
-      {title && <Text style={styles.text}>{title}</Text>}
+      {title && <Text style={textStyles}>{title}</Text>}
     </TouchableOpacity>
   )
 }
@@ -46,7 +32,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 12,
-    backgroundColor: '#555',
   },
   text: {
     fontSize: 18,

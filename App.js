@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import { StatusBar }           from 'expo-status-bar'
-import { StyleSheet, View }    from 'react-native'
-import EventBus                from 'just-event-bus'
+import { useState, useEffect }             from 'react'
+import { StatusBar }                       from 'expo-status-bar'
+import { StyleSheet, View, useColorScheme} from 'react-native'
+import EventBus                            from 'just-event-bus'
 
 import Config   from './components/Config'
 import Game     from './components/Game'
@@ -28,8 +28,11 @@ export default function App() {
     if (!prefs) Config.load()
   })
 
+  const colorScheme = useColorScheme()
+  const backgroundColor = colorScheme == 'dark' ? '#121212' : '#eee'
+
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, backgroundColor }}>
       <StatusBar style="auto" />
       {view === 'game' && <Game prefs={prefs} />}
       {view === 'settings' && <Settings prefs={prefs} saveSettings={saveSettings} />}
