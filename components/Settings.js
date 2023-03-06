@@ -78,7 +78,8 @@ export default function Settings(props) {
           value={prefs.language}
           items={languages}
           setOpen={setLanguageSelectOpen}
-          onValueChange={language => saveSettings({ language })}
+          setValue={language => saveSettings({ language: language() })}
+          listMode='MODAL'
         />
       </SettingsSection>
       <Button title='Start' color='red' onPress={startGame}></Button>
