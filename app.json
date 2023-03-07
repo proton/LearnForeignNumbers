@@ -12,7 +12,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/38da99f7-f90b-4b38-9ad6-3eaec21be2e8"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -35,6 +36,9 @@
         "projectId": "38da99f7-f90b-4b38-9ad6-3eaec21be2e8"
       }
     },
-    "owner": "proton2"
+    "owner": "proton2",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }
