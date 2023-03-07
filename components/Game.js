@@ -75,7 +75,7 @@ export default function Game({ prefs }) {
   })
 
   const numberColor = theme === 'dark' ? '#bebebe' : 'black'
-  const numberTextColor = theme === 'dark' ? '#aaa' : 'grey'
+  const numberTextColor = theme === 'dark' ? '#aaa' : '#555'
 
   return (
     <GestureHandlerRootView style={styles.container}>
