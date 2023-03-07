@@ -1,18 +1,19 @@
 import { StyleSheet, Text, TouchableOpacity, useColorScheme } from 'react-native'
 import { Feather }                                            from '@expo/vector-icons'
 
-const Button = ({ onPress, icon, title, color, style }) => {
+const Button = ({ prefs, onPress, icon, title, color, style }) => {
   const colorScheme = useColorScheme()
+  const theme = prefs.theme || colorScheme
 
-  const textColor = colorScheme == 'dark' ? '#ccc' : 'white'
+  const textColor = theme === 'dark' ? '#ccc' : 'white'
   let backgroundColor
 
   if (color == 'red') {
-    backgroundColor = colorScheme == 'dark' ? '#B00020' : 'red'
+    backgroundColor = theme === 'dark' ? '#B00020' : 'red'
   } else if (color == 'blue') {
-    backgroundColor = colorScheme == 'dark' ? '#3700B3' : '#2196F3'
+    backgroundColor = theme === 'dark' ? '#3700B3' : '#2196F3'
   } else if (color == 'grey') {
-    backgroundColor = colorScheme == 'dark' ? '#333333' : '#777777'
+    backgroundColor = theme === 'dark' ? '#333333' : '#777777'
   }
 
   const containerStyles = { ...styles.container, ...style, backgroundColor }

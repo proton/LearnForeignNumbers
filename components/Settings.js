@@ -1,6 +1,5 @@
 import { useState, useRef }                               from 'react'
 import { StyleSheet, Text, View, Switch, useColorScheme } from 'react-native'
-import DropDownPicker                                     from 'react-native-dropdown-picker'
 import EventBus                                           from 'just-event-bus'
 
 import Button             from './Button'
@@ -8,14 +7,22 @@ import SettingsSection    from './SettingsSection'
 import SettingsRow        from './SettingsRow'
 import SettingNumberInput from './SettingsNumberInput'
 import SettingLabel       from './SettingsLabel'
+import SettingsSelect     from './SettingsSelect'
 
 export default function Settings(props) {
-  const colorScheme = useColorScheme()
   const { prefs, saveSettings } = props
+  const colorScheme = useColorScheme()
+  const theme = prefs.theme || colorScheme
 
   const startGame = _ => {
     EventBus.emit('closeSettings')
   }
+
+  const themes = [
+    { value: '', label: 'System' },
+    { value: 'light', label: 'Light' },
+    { value: 'dark', label: 'Dark' },
+  ]
 
   const languages = [
     { value: 'ar', label: 'Arabic' },
@@ -47,49 +54,54 @@ export default function Settings(props) {
     { value: 'vi', label: 'Vietnamese' },
   ]
 
-  const [languageSelectOpen, setLanguageSelectOpen] = useState(false)
-
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
 
-  const headerColor = colorScheme == 'dark' ? '#999' : 'grey'
+  const headerColor = theme === 'dark' ? '#999' : 'grey'
 
   return (
     <View style={styles.container}>
       <Text style={{ ...styles.header, color: headerColor }}>Configure</Text>
-      <SettingsSection title='Numbers'>
+      <SettingsSection prefs={prefs} title='Numbers'>
         <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
-          <SettingLabel title="From" />
-          <SettingNumberInput inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} />
+          <SettingLabel prefs={prefs}title="From" />
+          <SettingNumberInput prefs={prefs} inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} />
         </SettingsRow>
         <SettingsRow>
-          <SettingLabel title="To" />
-          <SettingNumberInput inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} />
+          <SettingLabel prefs={prefs}title="To" />
+          <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} />
         </SettingsRow>
       </SettingsSection>
-      <SettingsSection title='Other'>
+      <SettingsSection prefs={prefs} title='Language'>
         <SettingsRow>
-          <SettingLabel title="Immediately show the answer" />
+          <SettingsSelect
+            prefs={prefs}
+            value={prefs.language}
+            values={languages}
+            onChange={language => saveSettings({ language: language() })}
+          />
+        </SettingsRow>
+      </SettingsSection>
+      <SettingsSection prefs={prefs} title='Theme'>
+        <SettingsRow>
+          <SettingsSelect
+            prefs={prefs}
+            value={prefs.theme}
+            values={themes}
+            onChange={theme => saveSettings({ theme: theme() })}
+          />
+        </SettingsRow>
+      </SettingsSection>
+      <SettingsSection prefs={prefs} title='Other'>
+        <SettingsRow>
+          <SettingLabel prefs={prefs} title="Immediately show the answer" />
           <Switch
             onValueChange={showAnswer => saveSettings({ showAnswer })}
             value={prefs.showAnswer}
           />
         </SettingsRow>
       </SettingsSection>
-      <SettingsSection title='Language'>
-        <SettingsRow>
-          <DropDownPicker
-            open={languageSelectOpen}
-            value={prefs.language}
-            items={languages}
-            setOpen={setLanguageSelectOpen}
-            setValue={language => saveSettings({ language: language() })}
-            listMode='MODAL'
-            theme={colorScheme == 'dark' ? 'DARK' : 'LIGHT'}
-          />
-        </SettingsRow>
-      </SettingsSection>
-      <Button title='Start' color='red' onPress={startGame}></Button>
+      <Button prefs={prefs} title='Start' color='red' onPress={startGame}></Button>
     </View>
   )
 }

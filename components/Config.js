@@ -9,6 +9,7 @@ const defaultConfig = {
   language:    'en',
   showAnswer:  false,
   firstLaunch: true,
+  theme:       '',
 }
 
 class Config {

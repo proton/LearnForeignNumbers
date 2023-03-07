@@ -8,8 +8,12 @@ import Game     from './components/Game'
 import Settings from './components/Settings'
 
 export default function App() {
-  const [prefs, setPrefs] = useState()
+  const [prefs, setPrefs] = useState({})
   const [view, setView] = useState('')
+  const prefsLoaded = !!Object.keys(prefs).length
+
+  const colorScheme = useColorScheme()
+  const theme = prefs.theme || colorScheme
 
   const saveSettings = function(settings) {
     const newPrefs = { ...prefs, ...settings, firstLaunch: false }
@@ -25,11 +29,10 @@ export default function App() {
     EventBus.on('openSettings', _ => setView('settings'))
     EventBus.on('closeSettings', _ => setView('game'))
 
-    if (!prefs) Config.load()
+    if (!prefsLoaded) Config.load()
   })
 
-  const colorScheme = useColorScheme()
-  const backgroundColor = colorScheme == 'dark' ? '#121212' : '#eee'
+  const backgroundColor = theme === 'dark' ? '#121212' : '#eee'
 
   return (
     <View style={{ ...styles.container, backgroundColor }}>

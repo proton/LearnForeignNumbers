@@ -1,9 +1,10 @@
 import { StyleSheet, View, Text, useColorScheme } from 'react-native'
 
-export default function SettingsSection({ title, children }) {
+export default function SettingsSection({ prefs, title, children }) {
   const colorScheme = useColorScheme()
+  const theme = prefs.theme || colorScheme
 
-  const labelColor = colorScheme == 'dark' ? '#999' : 'grey'
+  const labelColor = theme === 'dark' ? '#999' : '#333'
 
   return (
     <View style={styles.container}>
@@ -22,7 +23,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   label: {
-    color: '#333',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,

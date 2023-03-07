@@ -1,9 +1,10 @@
 import { StyleSheet, Text, useColorScheme } from 'react-native'
 
-export default function SettingLabel({ title }) {
+export default function SettingLabel({ prefs, title }) {
   const colorScheme = useColorScheme()
+  const theme = prefs.theme || colorScheme
 
-  const labelColor = colorScheme == 'dark' ? '#999' : 'grey'
+  const labelColor = theme === 'dark' ? '#999' : '#111'
 
   return (
     <Text style={{ ...styles.label, color: labelColor }}>{title}</Text>
@@ -12,7 +13,6 @@ export default function SettingLabel({ title }) {
 
 const styles = StyleSheet.create({
   label: {
-    color: '#111',
     fontSize: 18,
   },
 })

@@ -8,8 +8,9 @@ import EventBus                                                                 
 import Button from './Button'
 
 export default function Game({ prefs }) {
-  const colorScheme = useColorScheme()
   const { minNumber, maxNumber, language } = prefs
+  const colorScheme = useColorScheme()
+  const theme = prefs.theme || colorScheme
 
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
@@ -38,10 +39,11 @@ export default function Game({ prefs }) {
   }
 
   const showAnswer = _ => {
-    setNumberText(n2words(number, { lang: language }))
+    const text = n2words(number, { lang: language })
+    setNumberText(text)
     if (voice) {
       Speech.stop()
-      Speech.speak(number.toString(), { language: voice.name })
+      Speech.speak(text, { language: voice.name })
     }
   }
 
@@ -72,8 +74,8 @@ export default function Game({ prefs }) {
     if (!voice || !voice.language.startsWith(language)) findVoice()
   })
 
-  const numberColor = colorScheme == 'dark' ? '#bebebe' : 'black'
-  const numberTextColor = colorScheme == 'dark' ? '#aaa' : 'grey'
+  const numberColor = theme === 'dark' ? '#bebebe' : 'black'
+  const numberTextColor = theme === 'dark' ? '#aaa' : 'grey'
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -82,14 +84,14 @@ export default function Game({ prefs }) {
         onHandlerStateChange={onSwipe}
       >
         <View style={styles.internalContainer}>
-          <Button icon="settings" onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
+          <Button prefs={prefs} icon="settings" onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
           <TapGestureHandler onHandlerStateChange={onTap}>
             <Text style={{ ...styles.number, color: numberColor }}>{number}</Text>
           </TapGestureHandler>
           <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button title="Show answer" color="blue" onPress={showAnswer} />}
-            <Button title="Next" color="red" onPress={changeNumber} />
+            {!prefs.showAnswer && <Button prefs={prefs} title="Show answer" color="blue" onPress={showAnswer} />}
+            <Button prefs={prefs} title="Next" color="red" onPress={changeNumber} />
           </View>
         </View>
       </FlingGestureHandler>
