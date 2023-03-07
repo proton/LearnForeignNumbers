@@ -7,14 +7,13 @@ import EventBus                                                                 
 
 import Button from './Button'
 
-export default function Game({ prefs }) {
+export default function Game({ prefs, voices }) {
   const { minNumber, maxNumber, language } = prefs
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
-  const [voice, setVoice] = useState(null)
 
   const randomBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min
@@ -34,13 +33,19 @@ export default function Game({ prefs }) {
       // TODO: improve me too!
       newNumber = randomBetween(minNumber, maxNumber)
     }
-    setNumberText('')
     setNumber(newNumber)
+    if (prefs.showAnswer) showAnswer(newNumber)
+    else setNumberText('')
   }
 
-  const showAnswer = _ => {
+  const findVoice = _ => {
+    return voices.find(voice => voice.language.startsWith(language))
+  }
+
+  const showAnswer = number => {
     const text = n2words(number, { lang: language })
     setNumberText(text)
+    const voice = findVoice()
     if (voice) {
       Speech.stop()
       Speech.speak(text, { language: voice.name })
@@ -59,19 +64,12 @@ export default function Game({ prefs }) {
     if (event.nativeEvent.state === State.ACTIVE) changeNumber()
   }
 
-  const findVoice = _ => {
-    Speech.getAvailableVoicesAsync().then(voices => {
-      setVoice(voices.find(voice => voice.language.startsWith(language)))
-    })
-  }
-
-  useEffect(()=> {
-    if (number && prefs.showAnswer) showAnswer()
-  }, [number])
+  // useEffect(()=> {
+  //   if (number && prefs.showAnswer) showAnswer()
+  // }, [number])
 
   useEffect(() => {
     if (number === null) changeNumber()
-    if (!(voice && voice.language.startsWith(language))) findVoice()
   })
 
   const numberColor = theme === 'dark' ? '#bebebe' : 'black'
@@ -90,7 +88,7 @@ export default function Game({ prefs }) {
           </TapGestureHandler>
           <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button prefs={prefs} title="Show answer" color="blue" onPress={showAnswer} />}
+            {!prefs.showAnswer && <Button prefs={prefs} title="Show answer" color="blue" onPress={_ => showAnswer(number)} />}
             <Button prefs={prefs} title="Next" color="red" onPress={changeNumber} />
           </View>
         </View>

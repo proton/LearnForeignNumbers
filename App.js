@@ -2,6 +2,7 @@ import { useState, useEffect }             from 'react'
 import { StatusBar }                       from 'expo-status-bar'
 import { StyleSheet, View, useColorScheme} from 'react-native'
 import EventBus                            from 'just-event-bus'
+import * as Speech                         from 'expo-speech'
 
 import Config   from './components/Config'
 import Game     from './components/Game'
@@ -10,7 +11,9 @@ import Settings from './components/Settings'
 export default function App() {
   const [prefs, setPrefs] = useState({})
   const [view, setView] = useState('')
+  const [voices, setVoices] = useState(null)
   const prefsLoaded = !!Object.keys(prefs).length
+  const voicesLoaded = voices !== null
 
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
@@ -21,16 +24,22 @@ export default function App() {
     Config.save(newPrefs)
   }
 
+  const loadVoices = _ => {
+    if (voicesLoaded) return
+    Speech.getAvailableVoicesAsync().then(setVoices)
+  }
+
   useEffect(_ => {
     EventBus.on('prefsLoaded', setPrefs)
     EventBus.on('openSettings', _ => setView('settings'))
     EventBus.on('closeSettings', _ => setView('game'))
 
-    if (view === '' && prefsLoaded) {
+    if (view === '' && prefsLoaded && voicesLoaded) {
       setView(prefs.firstLaunch ? 'settings' : 'game')
     }
 
     if (!prefsLoaded) Config.load()
+    if (!voicesLoaded) loadVoices()
   })
 
   const backgroundColor = theme === 'dark' ? '#121212' : '#eee'
@@ -38,7 +47,7 @@ export default function App() {
   return (
     <View style={{ ...styles.container, backgroundColor }}>
       <StatusBar style="auto" />
-      {view === 'game' && <Game prefs={prefs} />}
+      {view === 'game' && <Game prefs={prefs} voices={voices} />}
       {view === 'settings' && <Settings prefs={prefs} saveSettings={saveSettings} />}
     </View>
   )
