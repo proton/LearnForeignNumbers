@@ -1,6 +1,6 @@
-import { useState, useRef }                               from 'react'
-import { StyleSheet, Text, View, Switch, useColorScheme } from 'react-native'
-import EventBus                                           from 'just-event-bus'
+import { useRef }                                                     from 'react'
+import { StyleSheet, Text, ScrollView, View, Switch, useColorScheme } from 'react-native'
+import EventBus                                                       from 'just-event-bus'
 
 import Button             from './Button'
 import SettingsSection    from './SettingsSection'
@@ -57,72 +57,83 @@ export default function Settings(props) {
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
 
-  const headerColor = theme === 'dark' ? '#999' : 'grey'
+  const headerColor = theme === 'dark' ? '#999' : '#444'
 
   return (
-    <View style={styles.container}>
-      <Text style={{ ...styles.header, color: headerColor }}>Configure</Text>
-      <SettingsSection prefs={prefs} title='Numbers'>
-        <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
-          <SettingLabel prefs={prefs}title="From" />
-          <SettingNumberInput prefs={prefs} inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} />
-        </SettingsRow>
-        <SettingsRow>
-          <SettingLabel prefs={prefs}title="To" />
-          <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} />
-        </SettingsRow>
-      </SettingsSection>
-      <SettingsSection prefs={prefs} title='Language'>
-        <SettingsRow>
-          <SettingsSelect
-            prefs={prefs}
-            value={prefs.language}
-            values={languages}
-            onChange={language => saveSettings({ language: language() })}
-          />
-        </SettingsRow>
-      </SettingsSection>
-      <SettingsSection prefs={prefs} title='Theme'>
-        <SettingsRow>
-          <SettingsSelect
-            prefs={prefs}
-            value={prefs.theme}
-            values={themes}
-            onChange={theme => saveSettings({ theme: theme() })}
-          />
-        </SettingsRow>
-      </SettingsSection>
-      <SettingsSection prefs={prefs} title='Other'>
-        <SettingsRow>
-          <SettingLabel prefs={prefs} title="Immediately show the answer" />
-          <Switch
-            onValueChange={showAnswer => saveSettings({ showAnswer })}
-            value={prefs.showAnswer}
-          />
-        </SettingsRow>
-      </SettingsSection>
-      <Button prefs={prefs} title='Start' color='red' onPress={startGame}></Button>
+    <View>
+      <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.container} persistentScrollbar={true}>
+        <Text style={{ ...styles.header, color: headerColor }}>Configure</Text>
+        <SettingsSection prefs={prefs} title='Numbers'>
+          <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
+            <SettingLabel prefs={prefs}title="From" />
+            <SettingNumberInput prefs={prefs} inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} />
+          </SettingsRow>
+          <SettingsRow>
+            <SettingLabel prefs={prefs}title="To" />
+            <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} />
+          </SettingsRow>
+        </SettingsSection>
+        <SettingsSection prefs={prefs} title='Language'>
+          <SettingsRow>
+            <SettingsSelect
+              prefs={prefs}
+              value={prefs.language}
+              values={languages}
+              onChange={language => saveSettings({ language: language() })}
+            />
+          </SettingsRow>
+        </SettingsSection>
+        <SettingsSection prefs={prefs} title='Theme'>
+          <SettingsRow>
+            <SettingsSelect
+              prefs={prefs}
+              value={prefs.theme}
+              values={themes}
+              onChange={theme => saveSettings({ theme: theme() })}
+            />
+          </SettingsRow>
+        </SettingsSection>
+        <SettingsSection prefs={prefs} title='Other'>
+          <SettingsRow>
+            <SettingLabel prefs={prefs} title="Immediately show the answer" />
+            <Switch
+              onValueChange={showAnswer => saveSettings({ showAnswer })}
+              value={prefs.showAnswer}
+            />
+          </SettingsRow>
+        </SettingsSection>
+      </ScrollView>
+      <Button prefs={prefs} title='Start' color='red' onPress={startGame} style={{margin: 20}}></Button>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    // height: 250,
+    // maxHeight: '50%',
+    // flexGrow: 0,
+    // flex: 1,
+    // width: null,
+    // height: null,
+  },
   container: {
-    flex: 1,
-    alignItems: 'stretch',
-    alignContent: 'stretch',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    flexShrink: 0,
-    flexGrow: 1,
-    maxWidth: '100%',
-    maxHeight: '100%',
-    padding: 10,
-    gap: 20,
+    // flex: 1,
+    // alignItems: 'stretch',
+    // alignContent: 'stretch',
+    // justifyContent: 'center',
+    // flexDirection: 'column',
+    // flexShrink: 0,
+    // flexGrow: 1,
+    // backgroundColor: 'yellow',
+    // maxWidth: '100%',
+    // maxHeight: '100%',
+    // padding: 10,
+    // gap: 20,
   },
   header: {
     textAlign: 'center',
-    fontSize: 22,
-    padding: 15,
+    fontSize: 26,
+    padding: 10,
   },
 })

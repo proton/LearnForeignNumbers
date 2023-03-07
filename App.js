@@ -51,5 +51,6 @@ const styles = StyleSheet.create({
     flexShrink: 0,
     flexGrow: 1,
     paddingTop: StatusBar.currentHeight || 35,
+    maxHeight: '100%',
   },
 })

@@ -16,6 +16,8 @@ export default function SettingsSection({ prefs, title, children }) {
 
 const styles = StyleSheet.create({
   container: {
+    marginVertical: 10,
+    paddingHorizontal: 5,
     paddingTop: 0,
     paddingBottom: 10,
     borderBottomColor: '#999',
