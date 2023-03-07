@@ -4,7 +4,7 @@ export default function SettingNumberInput({ prefs, value, onChange, inputRef })
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
-  const textColor = theme === 'dark' ? '#999' : '#111'
+  const textColor = theme === 'dark' ? '#aaa' : '#111'
 
   return (
     <TextInput

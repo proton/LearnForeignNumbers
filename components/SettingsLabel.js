@@ -4,7 +4,7 @@ export default function SettingLabel({ prefs, title }) {
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
-  const labelColor = theme === 'dark' ? '#999' : '#111'
+  const labelColor = theme === 'dark' ? '#aaa' : '#111'
 
   return (
     <Text style={{ ...styles.label, color: labelColor }}>{title}</Text>

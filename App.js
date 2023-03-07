@@ -22,12 +22,13 @@ export default function App() {
   }
 
   useEffect(_ => {
-    EventBus.on('prefsLoaded', prefs => {
-      setPrefs(prefs)
-      setView(prefs.firstLaunch ? 'settings' : 'game')
-    })
+    EventBus.on('prefsLoaded', setPrefs)
     EventBus.on('openSettings', _ => setView('settings'))
     EventBus.on('closeSettings', _ => setView('game'))
+
+    if (view === '' && prefsLoaded) {
+      setView(prefs.firstLaunch ? 'settings' : 'game')
+    }
 
     if (!prefsLoaded) Config.load()
   })

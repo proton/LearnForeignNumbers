@@ -71,7 +71,7 @@ export default function Game({ prefs }) {
 
   useEffect(() => {
     if (number === null) changeNumber()
-    if (!voice || !voice.language.startsWith(language)) findVoice()
+    if (!(voice && voice.language.startsWith(language))) findVoice()
   })
 
   const numberColor = theme === 'dark' ? '#bebebe' : 'black'
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexShrink: 0,
     flexGrow: 1,
+    paddingTop: 5,
   },
   internalContainer: {
     flex: 1,
