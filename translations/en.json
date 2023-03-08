@@ -1,4 +1,14 @@
 {
   "showAnswer": "Show answer",
-  "nextNumber": "Next"
+  "nextNumber": "Next",
+  "configure": "Configure",
+  "numbers": "Numbers",
+  "from": "From",
+  "to": "To",
+  "numbersLanguage": "Numbers Language",
+  "uiLanguage": "Interface Language",
+  "theme": "Theme",
+  "other": "Other",
+  "imediatelyShowAnswer": "Immediately show the answer",
+  "start": "Start"
 }

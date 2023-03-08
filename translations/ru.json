@@ -1,4 +1,14 @@
 {
   "showAnswer": "Ответ",
-  "nextNumber": "Следующий"
+  "nextNumber": "Следующий",
+  "configure": "Настройки",
+  "numbers": "Числа",
+  "from": "От",
+  "to": "До",
+  "numbersLanguage": "Язык чисел",
+  "uiLanguage": "Язык интерфейса",
+  "theme": "Тема",
+  "other": "Прочее",
+  "imediatelyShowAnswer": "Сразу показывать ответ",
+  "start": "Начать"
 }

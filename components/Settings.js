@@ -3,6 +3,7 @@ import { StyleSheet, Text, ScrollView, View, Switch, useColorScheme } from 'reac
 import EventBus                                                       from 'just-event-bus'
 
 import * as Consts        from './Constants'
+import Translate          from './Translate'
 import Button             from './Button'
 import SettingsSection    from './SettingsSection'
 import SettingsRow        from './SettingsRow'
@@ -14,6 +15,8 @@ export default function Settings(props) {
   const { prefs, saveSettings } = props
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
+
+  const tr = Translate(prefs.locale)
 
   const startGame = _ => {
     EventBus.emit('closeSettings')
@@ -27,18 +30,18 @@ export default function Settings(props) {
   return (
     <View>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.container} persistentScrollbar={true}>
-        <Text style={{ ...styles.header, color: headerColor }}>Configure</Text>
-        <SettingsSection prefs={prefs} title='Numbers'>
+        <Text style={{ ...styles.header, color: headerColor }}>{tr('configure')}</Text>
+        <SettingsSection prefs={prefs} title={tr('numbers')}>
           <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
-            <SettingLabel prefs={prefs}title="From" />
+            <SettingLabel prefs={prefs}title={tr('from')} />
             <SettingNumberInput prefs={prefs} inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} />
           </SettingsRow>
           <SettingsRow>
-            <SettingLabel prefs={prefs}title="To" />
+            <SettingLabel prefs={prefs}title={tr('to')} />
             <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} />
           </SettingsRow>
         </SettingsSection>
-        <SettingsSection prefs={prefs} title='Numbers Language'>
+        <SettingsSection prefs={prefs} title={tr('numbersLanguage')}>
           <SettingsRow>
             <SettingsSelect
               prefs={prefs}
@@ -48,7 +51,7 @@ export default function Settings(props) {
             />
           </SettingsRow>
         </SettingsSection>
-        <SettingsSection prefs={prefs} title='Interface Language'>
+        <SettingsSection prefs={prefs} title={tr('uiLanguage')}>
           <SettingsRow>
             <SettingsSelect
               prefs={prefs}
@@ -58,7 +61,7 @@ export default function Settings(props) {
             />
           </SettingsRow>
         </SettingsSection>
-        <SettingsSection prefs={prefs} title='Theme'>
+        <SettingsSection prefs={prefs} title={tr('theme')}>
           <SettingsRow>
             <SettingsSelect
               prefs={prefs}
@@ -68,9 +71,9 @@ export default function Settings(props) {
             />
           </SettingsRow>
         </SettingsSection>
-        <SettingsSection prefs={prefs} title='Other'>
+        <SettingsSection prefs={prefs} title={tr('other')}>
           <SettingsRow>
-            <SettingLabel prefs={prefs} title="Immediately show the answer" />
+            <SettingLabel prefs={prefs} title={tr('imediatelyShowAnswer')} />
             <Switch
               onValueChange={showAnswer => saveSettings({ showAnswer })}
               value={prefs.showAnswer}
@@ -78,7 +81,7 @@ export default function Settings(props) {
           </SettingsRow>
         </SettingsSection>
       </ScrollView>
-      <Button prefs={prefs} title='Start' color='red' onPress={startGame} style={{margin: 20}}></Button>
+      <Button prefs={prefs} title={tr('start')} color='red' onPress={startGame} style={{margin: 20}}></Button>
     </View>
   )
 }
