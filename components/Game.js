@@ -4,28 +4,16 @@ import { GestureHandlerRootView, TapGestureHandler, FlingGestureHandler, Directi
 import n2words                                                                               from 'n2words'
 import * as Speech                                                                           from 'expo-speech'
 import EventBus                                                                              from 'just-event-bus'
-import { I18n }                                                                              from 'i18n-js'
 
-import Button from './Button'
-
-const i18n = new I18n({
-  en: {
-    showAnswer: 'Show answer',
-    nextNumber: 'Next',
-  },
-  ru: {
-    showAnswer: 'Показать ответ',
-    nextNumber: 'Следующий номер',
-  },
-})
+import Translate from './Translate'
+import Button    from './Button'
 
 export default function Game({ prefs, voices }) {
   const { minNumber, maxNumber, language, locale } = prefs
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
-  i18n.locale = locale
-  i18n.enableFallback = true
+  const tr = Translate(locale)
 
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
@@ -99,8 +87,8 @@ export default function Game({ prefs, voices }) {
           </TapGestureHandler>
           <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button prefs={prefs} title={i18n.t('showAnswer')} color="blue" onPress={_ => showAnswer(number)} />}
-            <Button prefs={prefs} title={i18n.t('nextNumber')} color="red" onPress={changeNumber} />
+            {!prefs.showAnswer && <Button prefs={prefs} title={tr('showAnswer')} color="blue" onPress={_ => showAnswer(number)} />}
+            <Button prefs={prefs} title={tr('nextNumber')} color="red" onPress={changeNumber} />
           </View>
         </View>
       </FlingGestureHandler>
