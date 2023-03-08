@@ -50,8 +50,10 @@ export default function Game({ prefs, voices }) {
     setNumberText(text)
     const voice = findVoice()
     if (voice) {
+      // Stress fix
+      const speech = language === 'ru' ? text : number.toString()
       Speech.stop()
-      Speech.speak(text, { language: voice.name })
+      Speech.speak(speech, { language: voice.name })
     }
   }
 
