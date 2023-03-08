@@ -22,13 +22,15 @@ export default function Settings(props) {
     EventBus.emit('closeSettings')
   }
 
+  const sortByLabel = arr => arr.sort((a, b) => a.label > b.label ? 1 : a.label < b.label ? -1 : 0)
+
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
 
   const headerColor = theme === 'dark' ? '#999' : '#444'
 
   const themes = Consts.THEMES.map(theme => ({ value: theme, label: tr(`theme_${theme}`) }))
-  const languages = Consts.LANGUAGES.map(lang => ({ value: lang, label: tr(`language_${lang}`) }))
+  const languages = sortByLabel(Consts.LANGUAGES.map(lang => ({ value: lang, label: tr(`language_${lang}`) })))
 
   return (
     <View>
