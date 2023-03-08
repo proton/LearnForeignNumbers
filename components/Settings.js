@@ -2,6 +2,7 @@ import { useRef }                                                     from 'reac
 import { StyleSheet, Text, ScrollView, View, Switch, useColorScheme } from 'react-native'
 import EventBus                                                       from 'just-event-bus'
 
+import * as Consts        from './Constants'
 import Button             from './Button'
 import SettingsSection    from './SettingsSection'
 import SettingsRow        from './SettingsRow'
@@ -17,42 +18,6 @@ export default function Settings(props) {
   const startGame = _ => {
     EventBus.emit('closeSettings')
   }
-
-  const themes = [
-    { value: '', label: 'System' },
-    { value: 'light', label: 'Light' },
-    { value: 'dark', label: 'Dark' },
-  ]
-
-  const languages = [
-    { value: 'ar', label: 'Arabic' },
-    { value: 'az', label: 'Azerbaijani' },
-    { value: 'cz', label: 'Czech' },
-    { value: 'dk', label: 'Danish' },
-    { value: 'de', label: 'German' },
-    { value: 'en', label: 'English' },
-    { value: 'fa', label: 'Farsi' },
-    { value: 'fr', label: 'French' },
-    { value: 'he', label: 'Hebrew' },
-    { value: 'zh', label: 'Chinese' },
-    { value: 'hr', label: 'Croatian' },
-    { value: 'hu', label: 'Hungarian' },
-    { value: 'id', label: 'Indonesian' },
-    { value: 'it', label: 'Italian' },
-    { value: 'ko', label: 'Korean' },
-    { value: 'lt', label: 'Lithuanian' },
-    { value: 'lv', label: 'Latvian' },
-    { value: 'nl', label: 'Dutch' },
-    { value: 'no', label: 'Norwegian' },
-    { value: 'pl', label: 'Polish' },
-    { value: 'pt', label: 'Portuguese' },
-    { value: 'ru', label: 'Russian' },
-    { value: 'sr', label: 'Serbian' },
-    { value: 'es', label: 'Spanish' },
-    { value: 'tr', label: 'Turkish' },
-    { value: 'uk', label: 'Ukrainian' },
-    { value: 'vi', label: 'Vietnamese' },
-  ]
 
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
@@ -73,13 +38,23 @@ export default function Settings(props) {
             <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} />
           </SettingsRow>
         </SettingsSection>
-        <SettingsSection prefs={prefs} title='Language'>
+        <SettingsSection prefs={prefs} title='Numbers Language'>
           <SettingsRow>
             <SettingsSelect
               prefs={prefs}
               value={prefs.language}
-              values={languages}
+              values={Consts.LANGUAGES}
               onChange={language => saveSettings({ language: language() })}
+            />
+          </SettingsRow>
+        </SettingsSection>
+        <SettingsSection prefs={prefs} title='Interface Language'>
+          <SettingsRow>
+            <SettingsSelect
+              prefs={prefs}
+              value={prefs.locale}
+              values={Consts.LOCALES}
+              onChange={locale => saveSettings({ locale: locale() })}
             />
           </SettingsRow>
         </SettingsSection>
@@ -88,7 +63,7 @@ export default function Settings(props) {
             <SettingsSelect
               prefs={prefs}
               value={prefs.theme}
-              values={themes}
+              values={Consts.THEMES}
               onChange={theme => saveSettings({ theme: theme() })}
             />
           </SettingsRow>

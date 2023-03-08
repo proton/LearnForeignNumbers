@@ -26,7 +26,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.proton2.learnnumbers"
+      "package": "com.proton2.learnnumbers",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -39,6 +40,9 @@
     "owner": "proton2",
     "runtimeVersion": {
       "policy": "sdkVersion"
-    }
+    },
+    "plugins": [
+      "expo-localization"
+    ]
   }
 }
