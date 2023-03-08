@@ -27,6 +27,9 @@ export default function Settings(props) {
 
   const headerColor = theme === 'dark' ? '#999' : '#444'
 
+  const themes = Consts.THEMES.map(theme => ({ value: theme, label: tr(`theme_${theme}`) }))
+  const languages = Consts.LANGUAGES.map(lang => ({ value: lang, label: tr(`language_${lang}`) }))
+
   return (
     <View>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.container} persistentScrollbar={true}>
@@ -46,7 +49,7 @@ export default function Settings(props) {
             <SettingsSelect
               prefs={prefs}
               value={prefs.language}
-              values={Consts.LANGUAGES}
+              values={languages}
               onChange={language => saveSettings({ language: language() })}
             />
           </SettingsRow>
@@ -66,7 +69,7 @@ export default function Settings(props) {
             <SettingsSelect
               prefs={prefs}
               value={prefs.theme}
-              values={Consts.THEMES}
+              values={themes}
               onChange={theme => saveSettings({ theme: theme() })}
             />
           </SettingsRow>
