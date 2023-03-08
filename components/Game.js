@@ -5,12 +5,15 @@ import n2words                                                                  
 import * as Speech                                                                           from 'expo-speech'
 import EventBus                                                                              from 'just-event-bus'
 
-import Button from './Button'
+import Translate from './Translate'
+import Button    from './Button'
 
 export default function Game({ prefs, voices }) {
-  const { minNumber, maxNumber, language } = prefs
+  const { minNumber, maxNumber, language, locale } = prefs
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
+
+  const tr = Translate(locale)
 
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
@@ -64,10 +67,6 @@ export default function Game({ prefs, voices }) {
     if (event.nativeEvent.state === State.ACTIVE) changeNumber()
   }
 
-  // useEffect(()=> {
-  //   if (number && prefs.showAnswer) showAnswer()
-  // }, [number])
-
   useEffect(() => {
     if (number === null) changeNumber()
   })
@@ -88,8 +87,8 @@ export default function Game({ prefs, voices }) {
           </TapGestureHandler>
           <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button prefs={prefs} title="Show answer" color="blue" onPress={_ => showAnswer(number)} />}
-            <Button prefs={prefs} title="Next" color="red" onPress={changeNumber} />
+            {!prefs.showAnswer && <Button prefs={prefs} title={tr('showAnswer')} color="blue" onPress={_ => showAnswer(number)} />}
+            <Button prefs={prefs} title={tr('nextNumber')} color="red" onPress={changeNumber} />
           </View>
         </View>
       </FlingGestureHandler>
