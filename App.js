@@ -11,9 +11,9 @@ import Settings from './components/Settings'
 export default function App() {
   const [prefs, setPrefs] = useState({})
   const [view, setView] = useState('')
-  const [voices, setVoices] = useState(null)
+  const [voices, setVoices] = useState([])
   const prefsLoaded = !!Object.keys(prefs).length
-  const voicesLoaded = voices !== null
+  const voicesLoaded = voices.length > 0
 
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
@@ -24,9 +24,12 @@ export default function App() {
     Config.save(newPrefs)
   }
 
-  const loadVoices = _ => {
+  const loadVoices = async _ => {
     if (voicesLoaded) return
-    Speech.getAvailableVoicesAsync().then(setVoices)
+    Speech.getAvailableVoicesAsync().then(newVoices => {
+      if (newVoices.length === 0) loadVoices()
+      else setVoices(newVoices)
+    })
   }
 
   useEffect(_ => {
@@ -47,8 +50,8 @@ export default function App() {
   return (
     <View style={{ ...styles.container, backgroundColor }}>
       <StatusBar style="auto" />
-      {view === 'game' && <Game prefs={prefs} voices={voices} />}
-      {view === 'settings' && <Settings prefs={prefs} saveSettings={saveSettings} />}
+      {view === 'game' && <Game prefs={prefs} />}
+      {view === 'settings' && <Settings prefs={prefs} voices={voices} saveSettings={saveSettings} />}
     </View>
   )
 }

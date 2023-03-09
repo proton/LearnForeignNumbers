@@ -1,4 +1,4 @@
-import { useRef }                                                     from 'react'
+import { useRef, useState, useEffect }                                from 'react'
 import { StyleSheet, Text, ScrollView, View, Switch, useColorScheme } from 'react-native'
 import EventBus                                                       from 'just-event-bus'
 
@@ -12,15 +12,34 @@ import SettingLabel       from './SettingsLabel'
 import SettingsSelect     from './SettingsSelect'
 
 export default function Settings(props) {
-  const { prefs, saveSettings } = props
+  const { prefs, saveSettings, voices } = props
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
-
   const tr = Translate(prefs.locale)
 
-  const startGame = _ => {
-    EventBus.emit('closeSettings')
+  const noVoice = { value: '-', label: tr('noVoice') }
+  const generateLangVoices = language => {
+    language = language || prefs.language
+    const newLangVoices = voices.
+      filter(voice => voice.language.startsWith(language)).
+      map(voice => ({ value: voice.name, label: voice.name }))
+    newLangVoices.push(noVoice)
+    return newLangVoices
   }
+  const [langVoices, setLangVoices] = useState(generateLangVoices())
+
+  const changeLanguage = language => {
+    const newLangVoices = generateLangVoices(language)
+    const voice = (newLangVoices.find(voice => voice.value.includes('-language')) || newLangVoices[0]).value
+    if (langVoices[0].value != newLangVoices[0].value) setLangVoices(newLangVoices)
+    saveSettings({ voice: voice, language: language })
+  }
+
+  useEffect(_ => {
+    if (!prefs.voice) changeLanguage()
+  })
+
+  const startGame = _ => EventBus.emit('closeSettings')
 
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
@@ -50,7 +69,18 @@ export default function Settings(props) {
               prefs={prefs}
               value={prefs.language}
               values={languages}
-              onChange={language => saveSettings({ language: language() })}
+              onChange={value => changeLanguage(value())}
+            />
+          </SettingsRow>
+        </SettingsSection>
+        <SettingsSection prefs={prefs} title={tr('voice')}>
+          <SettingsRow>
+            <SettingsSelect
+              prefs={prefs}
+              value={prefs.voice}
+              values={langVoices}
+              disabled={langVoices.length === 1}
+              onChange={value => saveSettings({ voice: value() })}
             />
           </SettingsRow>
         </SettingsSection>
@@ -60,7 +90,7 @@ export default function Settings(props) {
               prefs={prefs}
               value={prefs.locale}
               values={Consts.LOCALES}
-              onChange={locale => saveSettings({ locale: locale() })}
+              onChange={value => saveSettings({ locale: value() })}
             />
           </SettingsRow>
         </SettingsSection>
@@ -70,7 +100,7 @@ export default function Settings(props) {
               prefs={prefs}
               value={prefs.theme}
               values={themes}
-              onChange={theme => saveSettings({ theme: theme() })}
+              onChange={value => saveSettings({ theme: value() })}
             />
           </SettingsRow>
         </SettingsSection>

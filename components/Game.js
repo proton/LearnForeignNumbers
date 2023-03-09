@@ -8,8 +8,8 @@ import EventBus                                                                 
 import Translate from './Translate'
 import Button    from './Button'
 
-export default function Game({ prefs, voices }) {
-  const { minNumber, maxNumber, language, locale } = prefs
+export default function Game({ prefs }) {
+  const { minNumber, maxNumber, language, locale, voice } = prefs
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
@@ -41,17 +41,12 @@ export default function Game({ prefs, voices }) {
     else setNumberText('')
   }
 
-  const findVoice = _ => {
-    return voices.find(voice => voice.language.startsWith(language))
-  }
-
   const showAnswer = number => {
     const text = n2words(number, { lang: language })
     setNumberText(text)
-    const voice = findVoice()
-    if (voice) {
+    if (voice && voice !== '-') {
       Speech.stop()
-      Speech.speak(text, { language: voice.name })
+      Speech.speak(text, { language: language, voice: voice })
     }
   }
 
