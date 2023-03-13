@@ -68,7 +68,7 @@ export default function Game({ prefs }) {
     if (number === null) changeNumber()
   })
 
-  const numberColor = theme === 'dark' ? '#bebebe' : 'black'
+  const numberColor = theme === 'dark' ? '#c3c3c3' : 'black'
   const numberTextColor = theme === 'dark' ? '#aaa' : '#555'
 
   return (
