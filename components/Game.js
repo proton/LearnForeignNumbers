@@ -41,10 +41,12 @@ export default function Game({ prefs }) {
     else setNumberText('')
   }
 
+  const voicePresent = voice && voice !== '-'
+
   const showAnswer = number => {
     const text = n2words(number, { lang: language })
     setNumberText(text)
-    if (voice && voice !== '-') {
+    if (voicePresent) {
       Speech.stop()
       Speech.speak(text, { language: language, voice: voice })
     }
@@ -76,13 +78,13 @@ export default function Game({ prefs }) {
         onHandlerStateChange={onSwipe}
       >
         <View style={styles.internalContainer}>
-          <Button prefs={prefs} icon="settings" onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
+          <Button prefs={prefs} icon="feather/settings" onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
           <TapGestureHandler onHandlerStateChange={onTap}>
             <Text style={{ ...styles.number, color: numberColor }}>{number}</Text>
           </TapGestureHandler>
           <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button prefs={prefs} title={tr('showAnswer')} color="blue" onPress={_ => showAnswer(number)} />}
+            {!prefs.showAnswer && <Button prefs={prefs} title={tr('showAnswer')} color="blue" icon={voicePresent ? 'foundation/sound' : null} onPress={_ => showAnswer(number)} />}
             <Button prefs={prefs} title={tr('nextNumber')} color="red" onPress={changeNumber} />
           </View>
         </View>
