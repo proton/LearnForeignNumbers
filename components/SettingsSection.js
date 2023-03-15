@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 5,
     marginBottom: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: 7,
     paddingTop: 0,
     paddingBottom: 5,
     borderBottomColor: '#999',

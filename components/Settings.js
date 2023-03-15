@@ -5,6 +5,7 @@ import EventBus                                                       from 'just
 import * as Consts        from './Constants'
 import Translate          from './Translate'
 import Button             from './Button'
+import Player             from './Player'
 import SettingsSection    from './SettingsSection'
 import SettingsRow        from './SettingsRow'
 import SettingNumberInput from './SettingsNumberInput'
@@ -16,6 +17,8 @@ export default function Settings(props) {
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
   const tr = Translate(prefs.locale)
+
+  const player = new Player({voice: prefs.voice, language: prefs.language})
 
   const noVoice = { value: '-', label: tr('noVoice') }
   const generateLangVoices = language => {
@@ -40,6 +43,7 @@ export default function Settings(props) {
   })
 
   const startGame = _ => EventBus.emit('closeSettings')
+  const demoVoice = _ => player.sayNumber(563)
 
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
@@ -82,6 +86,7 @@ export default function Settings(props) {
               disabled={langVoices.length === 1}
               onChange={value => saveSettings({ voice: value() })}
             />
+            { player.voicePresent() && <Button prefs={prefs} color='ebony' icon='antDesign/sound' onPress={demoVoice} /> }
           </SettingsRow>
         </SettingsSection>
         <SettingsSection prefs={prefs} title={tr('uiLanguage')}>

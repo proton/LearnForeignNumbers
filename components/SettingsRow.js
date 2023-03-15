@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 
 export default function SettingsRow(props) {
   const { children, onTouch } = props
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     gap: 20,
-    paddingTop: 5,
-    paddingBottom: 5,
+    paddingVertical: 5,
+    width: '100%',
   },
 })

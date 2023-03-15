@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, useColorScheme } from 'react-native'
-import { Feather, Foundation }                                from '@expo/vector-icons'
+import { AntDesign, Feather, Foundation }                     from '@expo/vector-icons'
 
 const Button = ({ prefs, onPress, icon, title, color, style }) => {
   const colorScheme = useColorScheme()
@@ -10,7 +10,7 @@ const Button = ({ prefs, onPress, icon, title, color, style }) => {
     [iconGroup, iconName] = icon.split('/')
   }
 
-  const textColor = theme === 'dark' ? '#ccc' : 'white'
+  const textColor = theme === 'dark' ? '#cfcfcf' : 'white'
   let backgroundColor
 
   if (color == 'red') {
@@ -18,7 +18,11 @@ const Button = ({ prefs, onPress, icon, title, color, style }) => {
   } else if (color == 'blue') {
     backgroundColor = theme === 'dark' ? '#3700B3' : '#2196F3'
   } else if (color == 'grey') {
-    backgroundColor = theme === 'dark' ? '#333333' : '#777777'
+    backgroundColor = theme === 'dark' ? '#333333' : '#808080'
+  } else if (color == 'ebony') {
+    backgroundColor = theme === 'dark' ? '#292d3e' : '#8990ad'
+  } else {
+    backgroundColor = color
   }
 
   const containerStyles = { ...styles.container, ...style, backgroundColor }
@@ -26,8 +30,9 @@ const Button = ({ prefs, onPress, icon, title, color, style }) => {
 
   return (
     <TouchableOpacity style={containerStyles} onPress={onPress} activeOpacity={0.8}>
-      {icon && iconGroup === 'feather' && <Feather name={iconName} size={24} color="white" />}
-      {icon && iconGroup === 'foundation' && <Foundation name={iconName} size={24} color="white" />}
+      {iconGroup === 'antDesign' && <AntDesign name={iconName} size={24} color={textColor} />}
+      {iconGroup === 'feather' && <Feather name={iconName} size={24} color={textColor} />}
+      {iconGroup === 'foundation' && <Foundation name={iconName} size={24} color={textColor} />}
 
       {title && <Text style={textStyles}>{title}</Text>}
     </TouchableOpacity>
@@ -46,7 +51,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 7,
-    flexShrink: 1,
   },
   text: {
     fontSize: 18,

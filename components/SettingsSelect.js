@@ -21,6 +21,8 @@ export default function SettingSelect({ prefs, value, values, onChange, disabled
       zIndex={100500}
       zIndexInverse={1000}
       disabled={disabled}
+      containerStyle={{width: 'auto', flexGrow: 1}}
+      style={{width: 'auto'}}
     />
   )
 }

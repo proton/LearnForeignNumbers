@@ -1,17 +1,18 @@
 import { useState, useEffect }                                                               from 'react'
 import { StyleSheet, Text, View, PixelRatio, useColorScheme }                                from 'react-native'
 import { GestureHandlerRootView, TapGestureHandler, FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
-import n2words                                                                               from 'n2words'
-import * as Speech                                                                           from 'expo-speech'
 import EventBus                                                                              from 'just-event-bus'
 
 import Translate from './Translate'
 import Button    from './Button'
+import Player    from './Player'
 
 export default function Game({ prefs }) {
   const { minNumber, maxNumber, language, locale, voice } = prefs
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
+
+  const player = new Player({voice: voice, language: language})
 
   const tr = Translate(locale)
 
@@ -41,15 +42,9 @@ export default function Game({ prefs }) {
     else setNumberText('')
   }
 
-  const voicePresent = voice && voice !== '-'
-
   const showAnswer = number => {
-    const text = n2words(number, { lang: language })
-    setNumberText(text)
-    if (voicePresent) {
-      Speech.stop()
-      Speech.speak(text, { language: language, voice: voice })
-    }
+    setNumberText(player.numberToText(number))
+    player.sayNumber(number)
   }
 
   const openSettings = _ => {
@@ -68,8 +63,8 @@ export default function Game({ prefs }) {
     if (number === null) changeNumber()
   })
 
-  const numberColor = theme === 'dark' ? '#c3c3c3' : 'black'
-  const numberTextColor = theme === 'dark' ? '#aaa' : '#555'
+  const numberColor = theme === 'dark' ? '#cfcfcf' : 'black'
+  const numberTextColor = theme === 'dark' ? '#afafaf' : '#555'
 
   return (
     <GestureHandlerRootView style={styles.container}>
@@ -84,7 +79,7 @@ export default function Game({ prefs }) {
           </TapGestureHandler>
           <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
           <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button prefs={prefs} title={tr('showAnswer')} color="blue" icon={voicePresent ? 'foundation/sound' : null} onPress={_ => showAnswer(number)} />}
+            {!prefs.showAnswer && <Button prefs={prefs} title={tr('showAnswer')} color="blue" onPress={_ => showAnswer(number)} />}
             <Button prefs={prefs} title={tr('nextNumber')} color="red" onPress={changeNumber} />
           </View>
         </View>
