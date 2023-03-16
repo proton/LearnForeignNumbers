@@ -23,5 +23,6 @@ const styles = StyleSheet.create({
     width: 90,
     textAlign: 'right',
     fontSize: 20,
+    minHeight: 48, // https://support.google.com/accessibility/android/answer/7101858
   },
 })

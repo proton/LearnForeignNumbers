@@ -18,6 +18,5 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingVertical: 5,
     width: '100%',
-    minHeight: 48, // https://support.google.com/accessibility/android/answer/7101858
   },
 })

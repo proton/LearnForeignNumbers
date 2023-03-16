@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, useColorScheme } from 'react-native'
 import { AntDesign, Feather, Foundation }                     from '@expo/vector-icons'
 
-const Button = ({ prefs, onPress, icon, title, color, style }) => {
+const Button = ({ prefs, onPress, icon, title, color, style, accessibilityLabel }) => {
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
@@ -34,7 +34,7 @@ const Button = ({ prefs, onPress, icon, title, color, style }) => {
   else if (iconGroup == 'Foundation') IconTag = Foundation
 
   return (
-    <TouchableOpacity style={containerStyles} onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity style={containerStyles} onPress={onPress} activeOpacity={0.8} accessibilityLabel={accessibilityLabel}>
       { IconTag && <IconTag name={iconName} size={24} color={textColor} style={styles.icon} /> }
       { title   && <Text style={textStyles}>{title}</Text> }
     </TouchableOpacity>

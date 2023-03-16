@@ -59,12 +59,12 @@ export default function Settings(props) {
         <Text style={{ ...styles.header, color: headerColor }}>{tr('configure')}</Text>
         <SettingsSection prefs={prefs} title={tr('numbers')}>
           <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
-            <SettingLabel prefs={prefs} title={tr('from')} nativeID="fromLabel" />
-            <SettingNumberInput prefs={prefs} inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} accessibilityLabel="input" accessibilityLabelledBy="fromLabel" />
+            <SettingLabel prefs={prefs} title={tr('from')} />
+            <SettingNumberInput prefs={prefs} inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} accessibilityLabel={tr('from')} />
           </SettingsRow>
-          <SettingsRow>
-            <SettingLabel prefs={prefs} title={tr('to')} nativeID="toLabel" />
-            <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} accessibilityLabel="input" accessibilityLabelledBy="toLabel"  />
+          <SettingsRow onTouch={_ => maxNumberRef.current.focus()}>
+            <SettingLabel prefs={prefs} title={tr('to')} />
+            <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} accessibilityLabel={tr('to')}  />
           </SettingsRow>
         </SettingsSection>
         <SettingsSection prefs={prefs} title={tr('numbersLanguage')}>
