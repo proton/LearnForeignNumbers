@@ -73,7 +73,7 @@ export default function Game({ prefs }) {
         onHandlerStateChange={onSwipe}
       >
         <View style={styles.internalContainer}>
-          <Button prefs={prefs} icon="feather/settings" onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
+          <Button prefs={prefs} icon='Feather/settings' onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
           <TapGestureHandler onHandlerStateChange={onTap}>
             <Text style={{ ...styles.number, color: numberColor }}>{number}</Text>
           </TapGestureHandler>

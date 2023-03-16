@@ -28,13 +28,15 @@ const Button = ({ prefs, onPress, icon, title, color, style }) => {
   const containerStyles = { ...styles.container, ...style, backgroundColor }
   const textStyles = { ...styles.text, color: textColor }
 
+  let IconTag
+  if      (iconGroup == 'AntDesign')  IconTag = AntDesign
+  else if (iconGroup == 'Feather')    IconTag = Feather
+  else if (iconGroup == 'Foundation') IconTag = Foundation
+
   return (
     <TouchableOpacity style={containerStyles} onPress={onPress} activeOpacity={0.8}>
-      {iconGroup === 'antDesign' && <AntDesign name={iconName} size={24} color={textColor} />}
-      {iconGroup === 'feather' && <Feather name={iconName} size={24} color={textColor} />}
-      {iconGroup === 'foundation' && <Foundation name={iconName} size={24} color={textColor} />}
-
-      {title && <Text style={textStyles}>{title}</Text>}
+      { IconTag && <IconTag name={iconName} size={24} color={textColor} style={styles.icon} /> }
+      { title   && <Text style={textStyles}>{title}</Text> }
     </TouchableOpacity>
   )
 }
@@ -58,6 +60,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignSelf: 'center',
     textTransform: 'uppercase',
+  },
+  icon: {
+    width: 24,
   },
 })
 

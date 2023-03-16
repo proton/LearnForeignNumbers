@@ -86,7 +86,7 @@ export default function Settings(props) {
               disabled={langVoices.length === 1}
               onChange={value => saveSettings({ voice: value() })}
             />
-            { player.voicePresent() && <Button prefs={prefs} color='ebony' icon='antDesign/sound' onPress={demoVoice} /> }
+            { player.voicePresent() && <Button prefs={prefs} color='ebony' icon='AntDesign/sound' onPress={demoVoice} /> }
           </SettingsRow>
         </SettingsSection>
         <SettingsSection prefs={prefs} title={tr('uiLanguage')}>
