@@ -20,6 +20,7 @@ export default function Game({ prefs }) {
   const [numberText, setNumberText] = useState('')
 
   const randomBetween = (min, max) => {
+    [min, max] = [min, max].sort((a, b) => a - b)
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
 

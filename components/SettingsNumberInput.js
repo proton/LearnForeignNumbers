@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput, useColorScheme } from 'react-native'
 
-export default function SettingNumberInput({ prefs, value, onChange, inputRef }) {
+export default function SettingNumberInput({ prefs, value, onChange, inputRef, accessibilityHint }) {
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
@@ -14,6 +14,7 @@ export default function SettingNumberInput({ prefs, value, onChange, inputRef })
       value={value.toString()}
       inputMode='numeric'
       keyboardType='numeric'
+      accessibilityHint={accessibilityHint}
     />
   )
 }
@@ -23,6 +24,6 @@ const styles = StyleSheet.create({
     width: 90,
     textAlign: 'right',
     fontSize: 20,
-    minHeight: 48, // https://support.google.com/accessibility/android/answer/7101858
+    minHeight: 38, // https://support.google.com/accessibility/android/answer/7101858
   },
 })

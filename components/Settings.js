@@ -44,6 +44,10 @@ export default function Settings(props) {
 
   const startGame = _ => EventBus.emit('closeSettings')
   const demoVoice = _ => player.sayNumber(563)
+  const switchShowAnswer = _ => {
+    const showAnswer = !prefs.showAnswer
+    saveSettings({ showAnswer })
+  }
 
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
@@ -60,11 +64,11 @@ export default function Settings(props) {
         <SettingsSection prefs={prefs} title={tr('numbers')}>
           <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
             <SettingLabel prefs={prefs} title={tr('from')} />
-            <SettingNumberInput prefs={prefs} inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} accessibilityLabel={tr('from')} />
+            <SettingNumberInput prefs={prefs} inputRef={minNumberRef} value={prefs.minNumber} onChange={minNumber => saveSettings({ minNumber })} accessibilityHint={tr('from')} />
           </SettingsRow>
           <SettingsRow onTouch={_ => maxNumberRef.current.focus()}>
             <SettingLabel prefs={prefs} title={tr('to')} />
-            <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} accessibilityLabel={tr('to')}  />
+            <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} accessibilityHint={tr('to')}  />
           </SettingsRow>
         </SettingsSection>
         <SettingsSection prefs={prefs} title={tr('numbersLanguage')}>
@@ -110,10 +114,10 @@ export default function Settings(props) {
           </SettingsRow>
         </SettingsSection>
         <SettingsSection prefs={prefs} title={tr('other')}>
-          <SettingsRow>
+          <SettingsRow onTouch={switchShowAnswer}>
             <SettingLabel prefs={prefs} title={tr('imediatelyShowAnswer')} />
             <Switch
-              onValueChange={showAnswer => saveSettings({ showAnswer })}
+              onChange={switchShowAnswer}
               value={prefs.showAnswer}
             />
           </SettingsRow>
