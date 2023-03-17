@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     gap: 20,
-    paddingVertical: 5,
     width: '100%',
-    minHeight: 48, // https://support.google.com/accessibility/android/answer/7101858
+    // https://support.google.com/accessibility/android/answer/7101858
+    minHeight: 48,
   },
 })

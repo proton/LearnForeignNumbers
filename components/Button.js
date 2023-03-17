@@ -53,6 +53,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 7,
+    // https://support.google.com/accessibility/android/answer/7101858
+    minWidth: 48,
+    minHeight: 48,
   },
   text: {
     fontSize: 18,
