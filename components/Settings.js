@@ -25,7 +25,7 @@ export default function Settings(props) {
     language = language || prefs.language
     const newLangVoices = voices.
       filter(voice => voice.language.startsWith(language)).
-      map(voice => ({ value: voice.name, label: voice.name }))
+      map(voice => ({ value: (voice.identifier || voice.name), label: voice.name }))
     newLangVoices.push(noVoice)
     return newLangVoices
   }
