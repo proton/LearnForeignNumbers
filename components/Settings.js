@@ -39,7 +39,7 @@ export default function Settings(props) {
   }
 
   useEffect(_ => {
-    if (!prefs.voice) changeLanguage()
+    if (!prefs.voice) changeLanguage(prefs.language)
   })
 
   const startGame = _ => EventBus.emit('closeSettings')
