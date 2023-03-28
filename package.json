@@ -35,11 +35,11 @@
     "n2words": "^1.13.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.71.3",
+    "react-native": "0.71.4",
     "react-native-dropdown-picker": "^5.4.4",
-    "react-native-gesture-handler": "~2.9.0",
     "react-native-reanimated": "~2.14.4",
     "react-native-settings-screen": "^2.2.1",
+    "react-native-swipe-gestures": "^1.0.5",
     "react-native-web": "~0.18.11"
   }
 }

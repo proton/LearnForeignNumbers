@@ -1,7 +1,8 @@
-import { useState, useEffect }                                                               from 'react'
-import { StyleSheet, Text, View, PixelRatio, useColorScheme }                                from 'react-native'
-import { GestureHandlerRootView, TapGestureHandler, FlingGestureHandler, Directions, State } from 'react-native-gesture-handler'
-import EventBus                                                                              from 'just-event-bus'
+import { useState, useEffect }                                from 'react'
+import { StyleSheet, Text, View, PixelRatio, useColorScheme } from 'react-native'
+import GestureRecognizer                                      from 'react-native-swipe-gestures'
+
+import EventBus from 'just-event-bus'
 
 import Translate from './Translate'
 import Button    from './Button'
@@ -18,14 +19,14 @@ export default function Game({ prefs }) {
 
   const [number, setNumber] = useState(null)
   const [numberText, setNumberText] = useState('')
+  const [previousNumbers, setPreviousNumbers] = useState([])
 
   const randomBetween = (min, max) => {
     [min, max] = [min, max].sort((a, b) => a - b)
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
-  const changeNumber = _ => {
-    let newNumber
+  const generateNewNumber = _ => {
     if (minNumber === 0 && maxNumber > 0) {
       // make it gradual
       const l1 = minNumber.toString().length
@@ -33,14 +34,32 @@ export default function Game({ prefs }) {
       const l = randomBetween(l1, l2)
       const max = Math.min(+'9'.repeat(l) + 1, maxNumber)
 
-      newNumber = randomBetween(minNumber, max)
+      return randomBetween(minNumber, max)
     } else {
       // TODO: improve me too!
-      newNumber = randomBetween(minNumber, maxNumber)
+      return randomBetween(minNumber, maxNumber)
     }
+  }
+
+  const changeNumber = _ => {
+    if (number) setPreviousNumbers([...previousNumbers, number])
+    let newNumber = number
+    while (newNumber === number) newNumber = generateNewNumber()
     setNumber(newNumber)
     if (prefs.showAnswer) showAnswer(newNumber)
     else setNumberText('')
+  }
+
+  const pickPreviousNumber = _ => {
+    if (previousNumbers.length === 0) {
+      changeNumber()
+      return
+    }
+
+    const oldNumber = previousNumbers.pop()
+    setPreviousNumbers(previousNumbers)
+    setNumber(oldNumber)
+    showAnswer(oldNumber)
   }
 
   const showAnswer = number => {
@@ -52,14 +71,6 @@ export default function Game({ prefs }) {
     EventBus.emit('openSettings')
   }
 
-  const onTap = event => {
-    if (event.nativeEvent.state === State.ACTIVE) showAnswer()
-  }
-
-  const onSwipe = event => {
-    if (event.nativeEvent.state === State.ACTIVE) changeNumber()
-  }
-
   useEffect(() => {
     if (number === null) changeNumber()
   })
@@ -68,24 +79,20 @@ export default function Game({ prefs }) {
   const numberTextColor = theme === 'dark' ? '#afafaf' : '#555'
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <FlingGestureHandler
-        direction={Directions.RIGHT | Directions.LEFT}
-        onHandlerStateChange={onSwipe}
-      >
-        <View style={styles.internalContainer}>
-          <Button prefs={prefs} icon='Feather/settings' accessibilityLabel={tr('openSettings')} onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
-          <TapGestureHandler onHandlerStateChange={onTap}>
-            <Text style={{ ...styles.number, color: numberColor }}>{number}</Text>
-          </TapGestureHandler>
-          <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
-          <View style={styles.footerContainer}>
-            {!prefs.showAnswer && <Button prefs={prefs} title={tr('showAnswer')} color="blue" onPress={_ => showAnswer(number)} />}
-            <Button prefs={prefs} title={tr('nextNumber')} color="red" onPress={changeNumber} />
-          </View>
+    <GestureRecognizer
+      onSwipeLeft={changeNumber}
+      onSwipeRight={pickPreviousNumber}
+      style={styles.container}>
+      <View style={styles.internalContainer}>
+        <Button prefs={prefs} icon='Feather/settings' accessibilityLabel={tr('openSettings')} onPress={openSettings} color="grey" style={{ position: 'absolute', top: 10, right: 10 }}/>
+        <Text style={{ ...styles.number, color: numberColor }} onPress={_ => showAnswer(number)}>{number}</Text>
+        <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
+        <View style={styles.footerContainer}>
+          {!prefs.showAnswer && <Button prefs={prefs} title={tr('showAnswer')} color="blue" onPress={_ => showAnswer(number)} />}
+          <Button prefs={prefs} title={tr('nextNumber')} color="red" onPress={changeNumber} />
         </View>
-      </FlingGestureHandler>
-    </GestureHandlerRootView>
+      </View>
+    </GestureRecognizer>
   )
 }
 

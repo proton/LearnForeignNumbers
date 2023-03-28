@@ -68,7 +68,7 @@ export default function Settings(props) {
           </SettingsRow>
           <SettingsRow onTouch={_ => maxNumberRef.current.focus()}>
             <SettingLabel prefs={prefs} title={tr('to')} />
-            <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} accessibilityHint={tr('to')}  />
+            <SettingNumberInput prefs={prefs} inputRef={maxNumberRef} value={prefs.maxNumber} onChange={maxNumber => saveSettings({ maxNumber })} accessibilityHint={tr('to')} />
           </SettingsRow>
         </SettingsSection>
         <SettingsSection prefs={prefs} title={tr('numbersLanguage')}>

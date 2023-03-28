@@ -29,14 +29,14 @@ const Button = ({ prefs, onPress, icon, title, color, style, accessibilityLabel 
   const textStyles = { ...styles.text, color: textColor }
 
   let IconTag
-  if      (iconGroup == 'AntDesign')  IconTag = AntDesign
-  else if (iconGroup == 'Feather')    IconTag = Feather
+  if (iconGroup == 'AntDesign') IconTag = AntDesign
+  else if (iconGroup == 'Feather') IconTag = Feather
   else if (iconGroup == 'Foundation') IconTag = Foundation
 
   return (
     <TouchableOpacity style={containerStyles} onPress={onPress} activeOpacity={0.8} accessibilityLabel={accessibilityLabel}>
       { IconTag && <IconTag name={iconName} size={24} color={textColor} style={styles.icon} /> }
-      { title   && <Text style={textStyles}>{title}</Text> }
+      { title && <Text style={textStyles}>{title}</Text> }
     </TouchableOpacity>
   )
 }
