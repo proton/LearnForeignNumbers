@@ -60,7 +60,7 @@ export default function Settings(props) {
   return (
     <View>
       <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.container} persistentScrollbar={true}>
-        <Text style={{ ...styles.header, color: headerColor }}>{tr('configure')}</Text>
+        <Text style={{ ...styles.header, color: headerColor }}>{tr('settings')}</Text>
         <SettingsSection prefs={prefs} title={tr('numbers')}>
           <SettingsRow onTouch={_ => minNumberRef.current.focus()}>
             <SettingLabel prefs={prefs} title={tr('from')} />
