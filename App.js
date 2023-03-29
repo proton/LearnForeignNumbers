@@ -50,7 +50,7 @@ export default function App() {
   return (
     <View style={{ ...styles.container, backgroundColor }}>
       <StatusBar style="auto" />
-      {view === 'game' && <Game prefs={prefs} />}
+      {view === 'game' && <Game prefs={prefs} saveSettings={saveSettings} />}
       {view === 'settings' && <Settings prefs={prefs} voices={voices} saveSettings={saveSettings} />}
     </View>
   )

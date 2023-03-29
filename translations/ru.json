@@ -1,5 +1,7 @@
 {
   "openSettings": "Открыть настройки",
+  "mute": "Выключить звук",
+  "unmute": "Включить звук",
   "showAnswer": "Ответ",
   "nextNumber": "Следующий",
   "settings": "Настройки",

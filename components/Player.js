@@ -4,9 +4,10 @@ import { Platform } from 'react-native'
 import { Audio }    from 'expo-av'
 
 export default class Player {
-  constructor({ voice, language }) {
+  constructor({ voice, language, muted }) {
     this.voice = voice
     this.language = language
+    this.muted = muted
     this.enableSound()
   }
 
@@ -22,7 +23,7 @@ export default class Player {
   }
 
   async sayNumber(number) {
-    if (!this.voicePresent()) return
+    if (this.silent()) return
     const text = this.numberToText(number)
     if (await Speech.isSpeakingAsync()) Speech.stop()
     Speech.speak(text, { language: this.language, voice: this.voice })
@@ -32,7 +33,11 @@ export default class Player {
     return n2words(number, { lang: this.language })
   }
 
-  voicePresent() {
+  silent() {
+    return this.muted || !this.voiced()
+  }
+
+  voiced() {
     return this.voice && this.voice !== '-'
   }
 }

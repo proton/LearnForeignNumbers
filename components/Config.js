@@ -13,6 +13,7 @@ const defaultConfig = {
   showAnswer:  false,
   firstLaunch: true,
   theme:       '',
+  muted:       false,
 }
 
 class Config {

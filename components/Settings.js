@@ -18,7 +18,7 @@ export default function Settings(props) {
   const theme = prefs.theme || colorScheme
   const tr = Translate(prefs.locale)
 
-  const player = new Player({voice: prefs.voice, language: prefs.language})
+  const player = new Player(prefs)
 
   const noVoice = { value: '-', label: tr('noVoice') }
   const generateLangVoices = language => {

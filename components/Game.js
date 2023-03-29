@@ -4,16 +4,17 @@ import GestureRecognizer                                      from 'react-native
 
 import EventBus from 'just-event-bus'
 
-import Translate from './Translate'
-import Button    from './Button'
-import Player    from './Player'
+import Translate  from './Translate'
+import Button     from './Button'
+import MuteButton from './MuteButton'
+import Player     from './Player'
 
-export default function Game({ prefs }) {
-  const { minNumber, maxNumber, language, locale, voice } = prefs
+export default function Game({ prefs, saveSettings }) {
+  const { minNumber, maxNumber, locale } = prefs
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
-  const player = new Player({voice: voice, language: language})
+  const player = new Player(prefs)
 
   const tr = Translate(locale)
 
@@ -85,6 +86,7 @@ export default function Game({ prefs }) {
       style={styles.container}>
       <View style={styles.internalContainer}>
         <Button prefs={prefs} icon='Feather/settings' accessibilityLabel={tr('openSettings')} onPress={openSettings} color="grey" style={{ position: 'absolute', top: 15, right: 15 }}/>
+        { player.voiced() && <MuteButton prefs={prefs} saveSettings={saveSettings} style={{ position: 'absolute', top: 75, right: 15 }}/> }
         <Text style={{ ...styles.number, color: numberColor }} onPress={_ => showAnswer(number)}>{number}</Text>
         <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
         <View style={styles.footerContainer}>
