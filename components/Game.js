@@ -85,8 +85,8 @@ export default function Game({ prefs, saveSettings }) {
       onSwipeRight={pickPreviousNumber}
       style={styles.container}>
       <View style={styles.internalContainer}>
-        <Button prefs={prefs} icon='Feather/settings' accessibilityLabel={tr('openSettings')} onPress={openSettings} color="grey" style={{ position: 'absolute', top: 15, right: 15 }}/>
-        { player.voiced() && <MuteButton prefs={prefs} saveSettings={saveSettings} style={{ position: 'absolute', top: 75, right: 15 }}/> }
+        <Button prefs={prefs} icon='Feather/settings' accessibilityLabel={tr('openSettings')} onPress={openSettings} color="grey" style={{ position: 'absolute', top: 20, right: 15 }}/>
+        { player.voiced() && <MuteButton prefs={prefs} saveSettings={saveSettings} style={{ position: 'absolute', top: 80, right: 15 }}/> }
         <Text style={{ ...styles.number, color: numberColor }} onPress={_ => showAnswer(number)}>{number}</Text>
         <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
         <View style={styles.footerContainer}>
