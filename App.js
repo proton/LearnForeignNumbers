@@ -3,6 +3,8 @@ import { StatusBar }                       from 'expo-status-bar'
 import { StyleSheet, View, useColorScheme} from 'react-native'
 import EventBus                            from 'just-event-bus'
 import * as Speech                         from 'expo-speech'
+import * as ScreenOrientation              from 'expo-screen-orientation'
+
 
 import Config   from './components/Config'
 import Game     from './components/Game'
@@ -33,6 +35,8 @@ export default function App() {
   }
 
   useEffect(_ => {
+    ScreenOrientation.unlockAsync()
+
     EventBus.on('prefsLoaded', setPrefs)
     EventBus.on('openSettings', _ => setView('settings'))
     EventBus.on('closeSettings', _ => setView('game'))
