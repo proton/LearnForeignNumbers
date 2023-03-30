@@ -5,8 +5,12 @@ export const THEMES = [
 ]
 
 export const LOCALES = [
+  { value: 'de', label: 'Deutsch' },
   { value: 'en', label: 'English' },
+  { value: 'es', label: 'Español' },
+  { value: 'it', label: 'Italiano' },
   { value: 'ru', label: 'Русский' },
+  { value: 'uk', label: 'Українська' },
 ]
 
 export const LANGUAGES = [
