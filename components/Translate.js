@@ -1,9 +1,10 @@
-import { I18n } from 'i18n-js'
+import { I18n }    from 'i18n-js'
+import * as Consts from './Constants'
 
-import en from '../translations/en.json'
-import ru from '../translations/ru.json'
-
-const translations = { en, ru }
+const translations = {}
+for (const locale of Consts.LOCALES) {
+  translations[locale] = require(`../translations/${locale}.json`)
+}
 
 export default function Translate(locale) {
   const i18n = new I18n(translations)
