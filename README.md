@@ -2,6 +2,8 @@
 
 The app for learning numbers in foreign languages.
 
+Versions for [iPhone](https://apps.apple.com/app/learn-foreign-numbers/id6446691361?platform=iphone) and [Android](https://play.google.com/store/apps/details?id=com.proton2.learnnumbers)
+
 Supported Numbers languages:
 
 - Arabic
