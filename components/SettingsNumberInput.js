@@ -21,9 +21,9 @@ export default function SettingNumberInput({ prefs, value, onChange, inputRef, a
 
 const styles = StyleSheet.create({
   element: {
-    width: 90,
+    width:     90,
     textAlign: 'right',
-    fontSize: 20,
+    fontSize:  20,
     minHeight: 48, // https://support.google.com/accessibility/android/answer/7101858
   },
 })

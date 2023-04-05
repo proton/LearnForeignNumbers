@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: 'center',
-    fontSize: 26,
-    padding: 10,
+    fontSize:  26,
+    padding:   10,
   },
 })
