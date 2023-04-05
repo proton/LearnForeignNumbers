@@ -34,7 +34,12 @@ Supported Numbers languages:
 
 Translations:
 
+- Chinese
+- German
 - English
+- Italian
 - Russian
+- Ukranian
+- Spanish
 
 ![Screenshot](screenshot.png)
