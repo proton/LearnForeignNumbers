@@ -11,7 +11,8 @@ export const LOCALES = [
   { value: 'it', label: 'Italiano' },
   { value: 'ru', label: 'Русский' },
   { value: 'uk', label: 'Українська' },
-  { value: 'zh', label: '中文' },
+  { value: 'zh_CN', label: '中文' },
+  { value: 'zh_TW', label: '繁体字' },
 ]
 
 export const LANGUAGES = [
