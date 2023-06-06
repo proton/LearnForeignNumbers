@@ -42,7 +42,7 @@ export default function Settings(props) {
     if (!prefs.voice) changeLanguage(prefs.language)
   })
 
-  const startGame = _ => EventBus.emit('closeSettings')
+  const startGame = _ => EventBus.emit('openGame')
   const demoVoice = _ => player.sayNumber(563)
   const switchShowAnswer = _ => {
     const showAnswer = !prefs.showAnswer

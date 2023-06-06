@@ -72,6 +72,10 @@ export default function Game({ prefs, saveSettings }) {
     EventBus.emit('openSettings')
   }
 
+  const openAbout = _ => {
+    EventBus.emit('openAbout')
+  }
+
   useEffect(() => {
     if (number === null) changeNumber()
   })
@@ -86,7 +90,8 @@ export default function Game({ prefs, saveSettings }) {
       style={styles.container}>
       <View style={styles.internalContainer}>
         <Button prefs={prefs} icon='Feather/settings' accessibilityLabel={tr('openSettings')} onPress={openSettings} color="grey" style={{ position: 'absolute', top: 20, right: 15 }}/>
-        { player.voiced() && <MuteButton prefs={prefs} saveSettings={saveSettings} style={{ position: 'absolute', top: 80, right: 15 }}/> }
+        <Button prefs={prefs} icon='Feather/info' accessibilityLabel={tr('about')} onPress={openAbout} color="grey" style={{ position: 'absolute', top: 80, right: 15 }}/>
+        { player.voiced() && <MuteButton prefs={prefs} saveSettings={saveSettings} style={{ position: 'absolute', top: 140, right: 15 }}/> }
         <Text style={{ ...styles.number, color: numberColor }} onPress={_ => showAnswer(number)}>{number}</Text>
         <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
         <View style={styles.footerContainer}>

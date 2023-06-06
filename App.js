@@ -7,6 +7,7 @@ import * as ScreenOrientation              from 'expo-screen-orientation'
 
 
 import Config   from './components/Config'
+import About    from './components/About'
 import Game     from './components/Game'
 import Settings from './components/Settings'
 
@@ -38,8 +39,9 @@ export default function App() {
     ScreenOrientation.unlockAsync()
 
     EventBus.on('prefsLoaded', setPrefs)
+    EventBus.on('openAbout', _ => setView('about'))
+    EventBus.on('openGame', _ => setView('game'))
     EventBus.on('openSettings', _ => setView('settings'))
-    EventBus.on('closeSettings', _ => setView('game'))
 
     if (view === '' && prefsLoaded && voicesLoaded) {
       setView(prefs.firstLaunch ? 'settings' : 'game')
@@ -54,6 +56,7 @@ export default function App() {
   return (
     <View style={{ ...styles.container, backgroundColor }}>
       <StatusBar style="auto" />
+      {view === 'about' && <About prefs={prefs} />}
       {view === 'game' && <Game prefs={prefs} saveSettings={saveSettings} />}
       {view === 'settings' && <Settings prefs={prefs} voices={voices} saveSettings={saveSettings} />}
     </View>
