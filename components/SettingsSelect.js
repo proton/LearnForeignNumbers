@@ -47,6 +47,7 @@ export default function SettingsSelect({ prefs, value, values, onChange, disable
 
 const styles = StyleSheet.create({
   containerStyle: {
+    minHeight: 48, // https://support.google.com/accessibility/android/answer/7101858
   },
   dropdown: {
     flexGrow: 1,

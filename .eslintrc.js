@@ -15,24 +15,24 @@ module.exports = {
     'align-import',
   ],
   rules: {
-    indent:           ['error', 2],
-    quotes:           [2, 'single', 'avoid-escape'],
-    'quote-props':    ['error', 'as-needed'],
-    'comma-dangle':   ['error', 'always-multiline'],
-    'no-unused-vars': [
+    'align-import/align-import': 'error',
+    'comma-dangle':              ['error', 'always-multiline'],
+    indent:                      ['error', 2],
+    'key-spacing':               ['error', { align: 'value' }],
+    'no-extra-semi':             'error',
+    'no-multi-spaces':           ['error', {exceptions: {ImportDeclaration: true}}],
+    'no-unused-vars':            [
       'error',
       {
-        varsIgnorePattern: '^_',
         argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
       },
     ],
-    'no-extra-semi':             'error',
-    semi:                        ['error', 'never'],
-    'react/react-in-jsx-scope':  'off',
-    'no-multi-spaces':           ['error', {exceptions: {ImportDeclaration: true}}],
-    'align-import/align-import': 'error',
-    'sort-keys':                 'error',
-    'key-spacing':               ['error', { align: 'value' }],
+    'quote-props':              ['error', 'as-needed'],
+    quotes:                     [2, 'single', 'avoid-escape'],
+    'react/react-in-jsx-scope': 'off',
+    semi:                       ['error', 'never'],
+    'sort-keys':                'error',
   },
   settings: {
     react: {

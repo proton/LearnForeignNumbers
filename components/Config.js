@@ -7,13 +7,13 @@ import * as Consts from './Constants'
 const configKey = 'settings'
 
 const defaultConfig = {
+  firstLaunch: true,
+  language:    'en',
   minNumber:   0,
   maxNumber:   1000,
-  language:    'en',
-  showAnswer:  false,
-  firstLaunch: true,
-  theme:       '',
   muted:       false,
+  showAnswer:  false,
+  theme:       '',
 }
 
 class Config {

@@ -76,12 +76,12 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex:           1,
     alignItems:     'center',
-    justifyContent: 'center',
-    flexShrink:     0,
+    flex:           1,
     flexGrow:       1,
-    paddingTop:     StatusBar.currentHeight || 35,
+    flexShrink:     0,
+    justifyContent: 'center',
     maxHeight:      '100%',
+    paddingTop:     StatusBar.currentHeight || 35,
   },
 })
