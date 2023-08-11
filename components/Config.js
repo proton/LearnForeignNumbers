@@ -22,6 +22,7 @@ class Config {
       const loadedConfig = jsonValue ? JSON.parse(jsonValue) : {}
       const config = { ...defaultConfig, ...loadedConfig }
       if (!config.locale) config.locale = this.findLocale()
+
       EventBus.emit('prefsLoaded', config)
     })
   }

@@ -11,6 +11,10 @@ import About    from './components/About'
 import Game     from './components/Game'
 import Settings from './components/Settings'
 
+const settingsTextStyle = theme => ({
+  color: theme === 'dark' ? '#aaa' : '#111',
+})
+
 export default function App() {
   const [prefs, setPrefs] = useState({})
   const [view, setView] = useState('')
@@ -21,9 +25,16 @@ export default function App() {
   const colorScheme = useColorScheme()
   const theme = prefs.theme || colorScheme
 
+  const enchantedSetPrefs = config => {
+    config.styles = {
+      settingsText: settingsTextStyle(config.theme),
+    }
+    setPrefs(config)
+  }
+
   const saveSettings = function(settings) {
     const newPrefs = { ...prefs, ...settings, firstLaunch: false }
-    setPrefs(newPrefs)
+    enchantedSetPrefs(newPrefs)
     Config.save(newPrefs)
   }
 
@@ -38,7 +49,7 @@ export default function App() {
   useEffect(_ => {
     ScreenOrientation.unlockAsync()
 
-    EventBus.on('prefsLoaded', setPrefs)
+    EventBus.on('prefsLoaded', enchantedSetPrefs)
     EventBus.on('openAbout', _ => setView('about'))
     EventBus.on('openGame', _ => setView('game'))
     EventBus.on('openSettings', _ => setView('settings'))

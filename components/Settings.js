@@ -77,7 +77,7 @@ export default function Settings(props) {
               prefs={prefs}
               value={prefs.language}
               values={languages}
-              onChange={value => changeLanguage(value())}
+              onChange={value => changeLanguage(value)}
             />
           </SettingsRow>
         </SettingsSection>
@@ -88,7 +88,7 @@ export default function Settings(props) {
               value={prefs.voice}
               values={langVoices}
               disabled={langVoices.length === 1}
-              onChange={value => saveSettings({ voice: value() })}
+              onChange={value => saveSettings({ voice: value })}
             />
             { player.voiced() && <Button prefs={prefs} color='ebony' icon='AntDesign/sound' onPress={demoVoice} /> }
           </SettingsRow>
@@ -99,7 +99,7 @@ export default function Settings(props) {
               prefs={prefs}
               value={prefs.locale}
               values={Consts.LOCALES}
-              onChange={value => saveSettings({ locale: value() })}
+              onChange={value => saveSettings({ locale: value })}
             />
           </SettingsRow>
         </SettingsSection>
@@ -109,7 +109,7 @@ export default function Settings(props) {
               prefs={prefs}
               value={prefs.theme}
               values={themes}
-              onChange={value => saveSettings({ theme: value() })}
+              onChange={value => saveSettings({ theme: value })}
             />
           </SettingsRow>
         </SettingsSection>
@@ -129,31 +129,13 @@ export default function Settings(props) {
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    // height: 250,
-    // maxHeight: '50%',
-    // flexGrow: 0,
-    // flex: 1,
-    // width: null,
-    // height: null,
-  },
   container: {
-    // flex: 1,
-    // alignItems: 'stretch',
-    // alignContent: 'stretch',
-    // justifyContent: 'center',
-    // flexDirection: 'column',
-    // flexShrink: 0,
-    // flexGrow: 1,
-    // backgroundColor: 'yellow',
-    // maxWidth: '100%',
-    // maxHeight: '100%',
-    // padding: 10,
-    // gap: 20,
   },
   header: {
-    textAlign: 'center',
     fontSize:  26,
     padding:   10,
+    textAlign: 'center',
+  },
+  scrollContainer: {
   },
 })
