@@ -89,9 +89,9 @@ export default function Game({ prefs, saveSettings }) {
       onSwipeRight={pickPreviousNumber}
       style={styles.container}>
       <View style={styles.internalContainer}>
-        <Button prefs={prefs} icon='Feather/settings' accessibilityLabel={tr('openSettings')} onPress={openSettings} color="grey" style={{ position: 'absolute', top: 20, right: 15 }}/>
-        <Button prefs={prefs} icon='Feather/info' accessibilityLabel={tr('about')} onPress={openAbout} color="grey" style={{ position: 'absolute', top: 80, right: 15 }}/>
-        { player.voiced() && <MuteButton prefs={prefs} saveSettings={saveSettings} style={{ position: 'absolute', top: 140, right: 15 }}/> }
+        <Button prefs={prefs} icon='Feather/settings' accessibilityLabel={tr('openSettings')} onPress={openSettings} color="grey" style={{ position: 'absolute', right: 15, top: 20 }}/>
+        <Button prefs={prefs} icon='Feather/info' accessibilityLabel={tr('about')} onPress={openAbout} color="grey" style={{ position: 'absolute', right: 15, top: 80 }}/>
+        { player.voiced() && <MuteButton prefs={prefs} saveSettings={saveSettings} style={{ position: 'absolute', right: 15, top: 140 }}/> }
         <Text style={{ ...styles.number, color: numberColor }} onPress={_ => showAnswer(number)}>{number}</Text>
         <Text style={{ ...styles.numberText, color: numberTextColor }}>{numberText}</Text>
         <View style={styles.footerContainer}>
@@ -105,26 +105,26 @@ export default function Game({ prefs, saveSettings }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex:           1,
     alignItems:     'center',
-    justifyContent: 'center',
-    flexShrink:     0,
+    flex:           1,
     flexGrow:       1,
+    flexShrink:     0,
+    justifyContent: 'center',
     paddingTop:     5,
   },
-  internalContainer: {
-    flex:           1,
+  footerContainer: {
     alignItems:     'center',
-    justifyContent: 'center',
-    flexShrink:     0,
-    flexGrow:       1,
+    flex:           1 / 3,
+    flexDirection:  'row',
+    justifyContent: 'space-evenly',
     width:          '100%',
   },
-  footerContainer: {
-    flex:           1 / 3,
+  internalContainer: {
     alignItems:     'center',
-    justifyContent: 'space-evenly',
-    flexDirection:  'row',
+    flex:           1,
+    flexGrow:       1,
+    flexShrink:     0,
+    justifyContent: 'center',
     width:          '100%',
   },
   number: {
