@@ -42,29 +42,29 @@ const Button = ({ prefs, onPress, icon, title, color, style, accessibilityLabel 
 
 const styles = StyleSheet.create({
   container: {
-    elevation:         8,
-    borderRadius:      10,
-    paddingVertical:   10,
-    paddingHorizontal: 12,
-    display:           'flex',
-    flexWrap:          'nowrap',
-    flexDirection:     'row',
     alignItems:        'center',
-    justifyContent:    'center',
+    borderRadius:      10,
+    display:           'flex',
+    elevation:         8,
+    flexDirection:     'row',
+    flexWrap:          'nowrap',
     gap:               7,
+    justifyContent:    'center',
     // https://support.google.com/accessibility/android/answer/7101858
-    minWidth:          48,
     minHeight:         48,
-  },
-  text: {
-    fontSize:      18,
-    color:         '#fff',
-    fontWeight:    'bold',
-    alignSelf:     'center',
-    textTransform: 'uppercase',
+    minWidth:          48,
+    paddingHorizontal: 12,
+    paddingVertical:   10,
   },
   icon: {
     width: 24,
+  },
+  text: {
+    alignSelf:     'center',
+    color:         '#fff',
+    fontSize:      18,
+    fontWeight:    'bold',
+    textTransform: 'uppercase',
   },
 })
 

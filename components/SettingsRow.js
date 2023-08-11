@@ -13,11 +13,11 @@ export default function SettingsRow(props) {
 const styles = StyleSheet.create({
   container: {
     alignItems:     'center',
-    justifyContent: 'space-between',
     flexDirection:  'row',
     gap:            20,
-    width:          '100%',
+    justifyContent: 'space-between',
     // https://support.google.com/accessibility/android/answer/7101858
     minHeight:      48,
+    width:          '100%',
   },
 })

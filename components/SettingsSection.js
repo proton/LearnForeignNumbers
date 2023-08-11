@@ -16,14 +16,14 @@ export default function SettingsSection({ prefs, title, children }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:         5,
-    marginBottom:      10,
-    paddingHorizontal: 7,
-    paddingTop:        0,
-    paddingBottom:     5,
     borderBottomColor: '#999',
     borderBottomWidth: 1,
     flexDirection:     'column',
+    marginBottom:      10,
+    marginTop:         5,
+    paddingBottom:     5,
+    paddingHorizontal: 7,
+    paddingTop:        0,
   },
   label: {
     fontSize:     20,

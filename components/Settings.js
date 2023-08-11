@@ -20,12 +20,12 @@ export default function Settings(props) {
 
   const player = new Player(prefs)
 
-  const noVoice = { value: '-', label: tr('noVoice') }
+  const noVoice = { label: tr('noVoice'), value: '-' }
   const generateLangVoices = language => {
     language = language || prefs.language
     const newLangVoices = voices.
       filter(voice => voice.language.startsWith(language)).
-      map(voice => ({ value: (voice.identifier || voice.name), label: voice.name }))
+      map(voice => ({ label: voice.name, value: (voice.identifier || voice.name) }))
     newLangVoices.push(noVoice)
     return newLangVoices
   }
@@ -35,7 +35,7 @@ export default function Settings(props) {
     const newLangVoices = generateLangVoices(language)
     const voice = (newLangVoices.find(voice => voice.value.includes('-language')) || newLangVoices[0]).value
     if (langVoices[0].value != newLangVoices[0].value) setLangVoices(newLangVoices)
-    saveSettings({ voice: voice, language: language })
+    saveSettings({ language: language, voice: voice })
   }
 
   useEffect(_ => {
@@ -54,8 +54,8 @@ export default function Settings(props) {
 
   const headerColor = theme === 'dark' ? '#999' : '#444'
 
-  const themes = Consts.THEMES.map(theme => ({ value: theme, label: tr(`theme_${theme}`) }))
-  const languages = Consts.LANGUAGES.map(lang => ({ value: lang, label: tr(`language_${lang}`) }))
+  const themes = Consts.THEMES.map(theme => ({ label: tr(`theme_${theme}`), value: theme }))
+  const languages = Consts.LANGUAGES.map(lang => ({ label: tr(`language_${lang}`), value: lang }))
 
   return (
     <View>
