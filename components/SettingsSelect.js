@@ -10,8 +10,8 @@ export default function SettingsSelect({ prefs, value, values, onChange, disable
 
   return (
     <Dropdown
-      style={[styles.dropdown, isOpen && { borderColor: 'red' }]}
-      containerStyle={{ ...styles.containerStyle, ...prefs.styles.settingsSelectContainer }}
+      style={styles.dropdown}
+      containerStyle={prefs.styles.settingsSelectContainer}
       selectedTextStyle={prefs.styles.settingsText}
       itemContainerStyle={prefs.styles.settingsSelectContainer}
       activeColor={activeBackgroundColor}
@@ -33,11 +33,9 @@ export default function SettingsSelect({ prefs, value, values, onChange, disable
 }
 
 const styles = StyleSheet.create({
-  containerStyle: {
-    minHeight: 48, // https://support.google.com/accessibility/android/answer/7101858
-  },
   dropdown: {
-    flexGrow: 1,
+    flexGrow:  1,
+    minHeight: 48, // https://support.google.com/accessibility/android/answer/7101858
   },
 })
 
