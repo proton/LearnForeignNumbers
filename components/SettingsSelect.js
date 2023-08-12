@@ -3,29 +3,17 @@ import { StyleSheet } from 'react-native'
 import { Dropdown }   from 'react-native-element-dropdown'
 
 export default function SettingsSelect({ prefs, value, values, onChange, disabled }) {
-  const { theme } = prefs
-
   const [isOpen, setIsOpen] = useState(false)
 
-  const containerTheme =
-    theme === 'dark' ? {
-      backgroundColor: '#121212',
-      color:           '#cfcfcf',
-      padding:         0,
-    } : {
-      backgroundColor: '#eee',
-      color:           'white',
-      padding:         0,
-    }
-
+  const theme = prefs.computedTheme
   const activeBackgroundColor = theme === 'dark' ? '#222222' : '#ddd'
 
   return (
     <Dropdown
       style={[styles.dropdown, isOpen && { borderColor: 'red' }]}
-      containerStyle={{ ...styles.containerStyle, ...containerTheme }}
+      containerStyle={{ ...styles.containerStyle, ...prefs.styles.settingsSelectContainer }}
       selectedTextStyle={prefs.styles.settingsText}
-      itemContainerStyle={containerTheme}
+      itemContainerStyle={prefs.styles.settingsSelectContainer}
       activeColor={activeBackgroundColor}
       itemTextStyle={prefs.styles.settingsText}
       data={values}

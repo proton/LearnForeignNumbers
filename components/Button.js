@@ -2,13 +2,13 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { AntDesign, Feather }                 from '@expo/vector-icons'
 
 const Button = ({ prefs, onPress, icon, title, color, style, accessibilityLabel }) => {
-  const { theme } = prefs
 
   let iconGroup, iconName
   if (icon) {
     [iconGroup, iconName] = icon.split('/')
   }
 
+  const theme = prefs.computedTheme
   const textColor = theme === 'dark' ? '#cfcfcf' : 'white'
   let backgroundColor
 

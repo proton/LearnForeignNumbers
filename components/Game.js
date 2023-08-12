@@ -10,7 +10,11 @@ import MuteButton from './MuteButton'
 import Player     from './Player'
 
 export default function Game({ prefs, saveSettings }) {
-  const { minNumber, maxNumber, locale, theme } = prefs
+  const { minNumber, maxNumber, locale } = prefs
+
+  const theme = prefs.computedTheme
+  const numberColor = theme === 'dark' ? '#cfcfcf' : 'black'
+  const numberTextColor = theme === 'dark' ? '#afafaf' : '#555'
 
   const player = new Player(prefs)
 
@@ -77,9 +81,6 @@ export default function Game({ prefs, saveSettings }) {
   useEffect(() => {
     if (number === null) changeNumber()
   })
-
-  const numberColor = theme === 'dark' ? '#cfcfcf' : 'black'
-  const numberTextColor = theme === 'dark' ? '#afafaf' : '#555'
 
   return (
     <GestureRecognizer

@@ -6,11 +6,11 @@ import Button    from './Button'
 
 export default function About(props) {
   const { prefs } = props
-  const { theme } = prefs
   const tr = Translate(prefs.locale)
 
   const closeWindow = _ => EventBus.emit('openGame')
 
+  const theme = prefs.computedTheme
   const headerColor = theme === 'dark' ? '#999' : '#444'
   const textColor = theme === 'dark' ? '#999' : '#444'
 

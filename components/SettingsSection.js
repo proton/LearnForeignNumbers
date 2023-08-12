@@ -1,8 +1,7 @@
 import { StyleSheet, View, Text } from 'react-native'
 
 export default function SettingsSection({ prefs, title, children }) {
-  const theme = { prefs }
-
+  const theme = prefs.computedTheme
   const labelColor = theme === 'dark' ? '#ccc' : '#333'
 
   return (

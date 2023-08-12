@@ -14,8 +14,10 @@ import SettingsSelect     from './SettingsSelect'
 
 export default function Settings(props) {
   const { prefs, saveSettings, voices } = props
-  const { theme } = prefs
   const tr = Translate(prefs.locale)
+
+  const theme = prefs.computedTheme
+  const headerColor = theme === 'dark' ? '#999' : '#444'
 
   const player = new Player(prefs)
 
@@ -50,8 +52,6 @@ export default function Settings(props) {
 
   const minNumberRef = useRef()
   const maxNumberRef = useRef()
-
-  const headerColor = theme === 'dark' ? '#999' : '#444'
 
   const themes = Consts.THEMES.map(theme => ({ label: tr(`theme_${theme}`), value: theme }))
   const languages = Consts.LANGUAGES.map(lang => ({ label: tr(`language_${lang}`), value: lang }))

@@ -22,11 +22,12 @@ export default function App() {
   const prefsLoaded = !!Object.keys(prefs).length
   const voicesLoaded = voices.length > 0
 
-  const theme = prefs.theme || useColorScheme()
+  const colorScheme = useColorScheme()
+  const theme = prefs.theme || colorScheme
   const enchantedPrefs = {
     ...prefs,
-    styles: themeStyle(theme),
-    theme:  theme,
+    computedTheme: theme,
+    styles:        themeStyle(theme),
   }
 
   const saveSettings = function(settings) {
