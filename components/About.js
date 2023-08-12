@@ -1,13 +1,12 @@
-import { StyleSheet, Text, Linking, View, useColorScheme } from 'react-native'
-import EventBus                                            from 'just-event-bus'
+import { StyleSheet, Text, Linking, View } from 'react-native'
+import EventBus                            from 'just-event-bus'
 
 import Translate from './Translate'
 import Button    from './Button'
 
 export default function About(props) {
   const { prefs } = props
-  const colorScheme = useColorScheme()
-  const theme = prefs.theme || colorScheme
+  const { theme } = prefs
   const tr = Translate(prefs.locale)
 
   const closeWindow = _ => EventBus.emit('openGame')

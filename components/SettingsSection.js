@@ -1,8 +1,7 @@
-import { StyleSheet, View, Text, useColorScheme } from 'react-native'
+import { StyleSheet, View, Text } from 'react-native'
 
 export default function SettingsSection({ prefs, title, children }) {
-  const colorScheme = useColorScheme()
-  const theme = prefs.theme || colorScheme
+  const theme = { prefs }
 
   const labelColor = theme === 'dark' ? '#ccc' : '#333'
 

@@ -5,15 +5,30 @@ import EventBus                            from 'just-event-bus'
 import * as Speech                         from 'expo-speech'
 import * as ScreenOrientation              from 'expo-screen-orientation'
 
-
 import Config   from './components/Config'
 import About    from './components/About'
 import Game     from './components/Game'
 import Settings from './components/Settings'
 
-const settingsTextStyle = theme => ({
-  color: theme === 'dark' ? '#aaa' : '#111',
-})
+const darkThemeStyle = {
+  app: {
+    backgroundColor: '#121212',
+  },
+  settingsText: {
+    color: '#aaa',
+  },
+}
+
+const lightThemeStyle = {
+  app: {
+    backgroundColor: '#eee',
+  },
+  settingsText: {
+    color: '#111',
+  },
+}
+
+const themeStyle = theme => theme === 'dark' ? darkThemeStyle : lightThemeStyle
 
 export default function App() {
   const [prefs, setPrefs] = useState({})
@@ -22,19 +37,16 @@ export default function App() {
   const prefsLoaded = !!Object.keys(prefs).length
   const voicesLoaded = voices.length > 0
 
-  const colorScheme = useColorScheme()
-  const theme = prefs.theme || colorScheme
-
-  const enchantedSetPrefs = config => {
-    config.styles = {
-      settingsText: settingsTextStyle(config.theme),
-    }
-    setPrefs(config)
+  const theme = prefs.theme || useColorScheme()
+  const enchantedPrefs = {
+    ...prefs,
+    styles: themeStyle(theme),
+    theme:  theme,
   }
 
   const saveSettings = function(settings) {
     const newPrefs = { ...prefs, ...settings, firstLaunch: false }
-    enchantedSetPrefs(newPrefs)
+    setPrefs(newPrefs)
     Config.save(newPrefs)
   }
 
@@ -49,7 +61,7 @@ export default function App() {
   useEffect(_ => {
     ScreenOrientation.unlockAsync()
 
-    EventBus.on('prefsLoaded', enchantedSetPrefs)
+    EventBus.on('prefsLoaded', setPrefs)
     EventBus.on('openAbout', _ => setView('about'))
     EventBus.on('openGame', _ => setView('game'))
     EventBus.on('openSettings', _ => setView('settings'))
@@ -62,14 +74,12 @@ export default function App() {
     if (!voicesLoaded) loadVoices()
   })
 
-  const backgroundColor = theme === 'dark' ? '#121212' : '#eee'
-
   return (
-    <View style={{ ...styles.container, backgroundColor }}>
+    <View style={{ ...styles.container, ...enchantedPrefs.styles.app }}>
       <StatusBar style="auto" />
-      {view === 'about' && <About prefs={prefs} />}
-      {view === 'game' && <Game prefs={prefs} saveSettings={saveSettings} />}
-      {view === 'settings' && <Settings prefs={prefs} voices={voices} saveSettings={saveSettings} />}
+      {view === 'about' && <About prefs={enchantedPrefs} />}
+      {view === 'game' && <Game prefs={enchantedPrefs} saveSettings={saveSettings} />}
+      {view === 'settings' && <Settings prefs={enchantedPrefs} voices={voices} saveSettings={saveSettings} />}
     </View>
   )
 }

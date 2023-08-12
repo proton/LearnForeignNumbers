@@ -1,6 +1,6 @@
-import { useRef, useState, useEffect }                                from 'react'
-import { StyleSheet, Text, ScrollView, View, Switch, useColorScheme } from 'react-native'
-import EventBus                                                       from 'just-event-bus'
+import { useRef, useState, useEffect }                from 'react'
+import { StyleSheet, Text, ScrollView, View, Switch } from 'react-native'
+import EventBus                                       from 'just-event-bus'
 
 import * as Consts        from './Constants'
 import Translate          from './Translate'
@@ -14,8 +14,7 @@ import SettingsSelect     from './SettingsSelect'
 
 export default function Settings(props) {
   const { prefs, saveSettings, voices } = props
-  const colorScheme = useColorScheme()
-  const theme = prefs.theme || colorScheme
+  const { theme } = prefs
   const tr = Translate(prefs.locale)
 
   const player = new Player(prefs)

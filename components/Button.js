@@ -1,9 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, useColorScheme } from 'react-native'
-import { AntDesign, Feather }                                 from '@expo/vector-icons'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { AntDesign, Feather }                 from '@expo/vector-icons'
 
 const Button = ({ prefs, onPress, icon, title, color, style, accessibilityLabel }) => {
-  const colorScheme = useColorScheme()
-  const theme = prefs.theme || colorScheme
+  const { theme } = prefs
 
   let iconGroup, iconName
   if (icon) {

@@ -1,6 +1,6 @@
-import { useState, useEffect }                                from 'react'
-import { StyleSheet, Text, View, PixelRatio, useColorScheme } from 'react-native'
-import GestureRecognizer                                      from 'react-native-swipe-gestures'
+import { useState, useEffect }                from 'react'
+import { StyleSheet, Text, View, PixelRatio } from 'react-native'
+import GestureRecognizer                      from 'react-native-swipe-gestures'
 
 import EventBus from 'just-event-bus'
 
@@ -10,9 +10,7 @@ import MuteButton from './MuteButton'
 import Player     from './Player'
 
 export default function Game({ prefs, saveSettings }) {
-  const { minNumber, maxNumber, locale } = prefs
-  const colorScheme = useColorScheme()
-  const theme = prefs.theme || colorScheme
+  const { minNumber, maxNumber, locale, theme } = prefs
 
   const player = new Player(prefs)
 

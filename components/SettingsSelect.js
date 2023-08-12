@@ -1,10 +1,9 @@
-import { useState }                  from 'react'
-import { StyleSheet, useColorScheme} from 'react-native'
-import { Dropdown }                  from 'react-native-element-dropdown'
+import { useState }   from 'react'
+import { StyleSheet } from 'react-native'
+import { Dropdown }   from 'react-native-element-dropdown'
 
 export default function SettingsSelect({ prefs, value, values, onChange, disabled }) {
-  const colorScheme = useColorScheme()
-  const theme = prefs.theme || colorScheme
+  const { theme } = prefs
 
   const [isOpen, setIsOpen] = useState(false)
 
