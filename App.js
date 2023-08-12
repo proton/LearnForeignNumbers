@@ -10,23 +10,8 @@ import About    from './components/About'
 import Game     from './components/Game'
 import Settings from './components/Settings'
 
-const darkThemeStyle = {
-  app: {
-    backgroundColor: '#121212',
-  },
-  settingsText: {
-    color: '#aaa',
-  },
-}
-
-const lightThemeStyle = {
-  app: {
-    backgroundColor: '#eee',
-  },
-  settingsText: {
-    color: '#111',
-  },
-}
+import lightThemeStyle from './themes/light'
+import darkThemeStyle  from './themes/dark'
 
 const themeStyle = theme => theme === 'dark' ? darkThemeStyle : lightThemeStyle
 
