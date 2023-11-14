@@ -37,7 +37,7 @@
     "n2words": "1.15.0",
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
-    "react-native": "0.71.8",
+    "react-native": "0.71.14",
     "react-native-element-dropdown": ">=2.9.0",
     "react-native-reanimated": "~2.14.4",
     "react-native-settings-screen": ">=2.2.1",
