@@ -54,7 +54,9 @@ export default function Settings(props) {
   const maxNumberRef = useRef()
 
   const themes = Consts.THEMES.map(theme => ({ label: tr(`theme_${theme}`), value: theme }))
-  const languages = Consts.LANGUAGES.map(lang => ({ label: tr(`language_${lang}`), value: lang }))
+  const languages = Consts.LANGUAGES
+    .map(lang => ({ label: tr(`language_${lang}`), value: lang }))
+    .sort((a, b) => a.label.localeCompare(b.label))
 
   return (
     <View>
