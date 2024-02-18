@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     flexShrink:     0,
     justifyContent: 'center',
     paddingTop:     5,
+    width:          '100%',
   },
   footerContainer: {
     alignItems:     'center',
@@ -131,7 +132,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   numberText: {
-    fontSize:  PixelRatio.get() * 18,
-    textAlign: 'center',
+    fontSize:          PixelRatio.get() * 18,
+    paddingHorizontal: 5,
+    textAlign:         'center',
   },
 })
