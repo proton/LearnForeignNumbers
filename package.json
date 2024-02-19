@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": ">=13.0.0",
-    "@react-native-async-storage/async-storage": ">1.17.11",
+    "@react-native-async-storage/async-storage": "1.21.0",
     "expo": ">=50.0.0",
     "expo-av": ">13.2.1",
     "expo-localization": ">14.1.1",
@@ -41,7 +41,7 @@
     "react-dom": ">=18.2.0",
     "react-native": ">=0.71.14",
     "react-native-element-dropdown": ">=2.9.0",
-    "react-native-reanimated": ">2.14.4",
+    "react-native-reanimated": "~3.6.2",
     "react-native-settings-screen": ">=2.2.1",
     "react-native-swipe-gestures": ">=1.0.5",
     "react-native-web": ">0.18.10",
