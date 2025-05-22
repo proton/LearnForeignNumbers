@@ -2,7 +2,7 @@
   "expo": {
     "name": "Learn Numbers",
     "slug": "learn-numbers",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -21,13 +21,19 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.proton.learn-numbers",
-      "buildNumber": "13"
+      "buildNumber": "13",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
+      "blockedPermissions": [
+        "android.permission.ACTIVITY_RECOGNITION"
+      ],
       "package": "com.proton2.learnnumbers",
       "versionCode": 31
     },

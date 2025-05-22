@@ -45,3 +45,11 @@ Translations:
 - Spanish
 
 ![Screenshot](screenshot.png)
+
+# HOW TO UPGRADE
+
+```
+npm install expo@latest
+npx expo install expo@latest
+npx expo install --fix
+```
