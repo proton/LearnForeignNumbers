@@ -1,25 +1,22 @@
-import n2words      from 'n2words'
-import * as Speech  from 'expo-speech'
-import { Platform } from 'react-native'
-import { Audio }    from 'expo-av'
+import n2words               from 'n2words'
+import * as Speech           from 'expo-speech'
+import { setAudioModeAsync } from 'expo-audio'
 
 export default class Player {
   constructor({ voice, language, muted }) {
     this.voice = voice
     this.language = language
     this.muted = muted
-    this.enableSound()
+    this.configureAudio()
   }
 
-  async enableSound() {
-    if (Platform.OS === 'ios') {
-      await Audio.setAudioModeAsync({
-        playsInSilentModeIOS: true,
-      })
-      const soundObject = new Audio.Sound()
-      await soundObject.loadAsync(require('../assets/empty.mp3'))
-      await soundObject.playAsync()
-    }
+  async configureAudio() {
+    await setAudioModeAsync({
+      playsInSilentMode:       true,
+      shouldPlayInBackground:  true,
+      interruptionModeAndroid: 'duckOthers',
+      interruptionMode:        'mixWithOthers',
+    })
   }
 
   async sayNumber(number) {
